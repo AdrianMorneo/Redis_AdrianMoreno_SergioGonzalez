@@ -50,6 +50,17 @@ class Colaborador:
                     else:
                         fallos = ut.fallo(fallos, "El nombre debe contener al menos 2 caracteres.")
 
+            finEntradaAlta = False
+            if fallos < 5:
+                fallos = 0
+                while not finEntradaAlta and fallos < 5:
+                    telefono = input("Telefono:")
+                    if ut.validarTelefono(telefono):
+                        print("\t\tTelefono Valido\n")
+                        finEntradaAlta = True
+                    else:
+                        fallos = ut.fallo(fallos, "El nombre debe contener al menos 2 caracteres.")
+
             fechaInscripcion = datetime.now().strftime("%d-%m-%Y")
 
             # Crea un diccionario con los datos del colaborador
@@ -57,12 +68,14 @@ class Colaborador:
                 'dni': dni,
                 'nombre': nombre,
                 'apellido': apellido,
+                'telefono': telefono,
                 'fechaInscripcion': fechaInscripcion
             }
             print(colaborador)
             key = f'colaborador:{dni}'
             self.con.hset(key, "nombre", colaborador['nombre'])
             self.con.hset(key, "apellido", colaborador['apellido'])
+            self.con.hset(key, "telefono", colaborador['telefono'])
             self.con.hset(key, "fechaInscripcion", colaborador['fechaInscripcion'])
 
 
