@@ -1,9 +1,13 @@
-import redis
-from configparser import ConfigParser
 
+from Interfaz import Santuario
+
+santuario = Santuario()
+
+
+'''
 configuracion = ConfigParser()
 configuracion.read("ConexionConfig.ini")
-
+        
 con = redis.StrictRedis(host=configuracion.get('conexion', 'host'), port=configuracion.getint('conexion', 'puerto'), db=configuracion.getint('conexion', 'db'), decode_responses=True)
 
 con.set('nombre', 'Juan')
@@ -15,3 +19,7 @@ edad = con.get('edad')
 
 print(f'Nombre: {nombre}')
 print(f'Edad: {edad}')
+'''
+#conexion.conectar()
+santuario.ejecutar()
+
