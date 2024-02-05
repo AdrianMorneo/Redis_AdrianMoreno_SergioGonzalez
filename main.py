@@ -1,7 +1,7 @@
 
-from Interfaz import Santuario
+import Interfaz as interfaz
 
-santuario = Santuario()
+
 
 
 '''
@@ -21,5 +21,5 @@ print(f'Nombre: {nombre}')
 print(f'Edad: {edad}')
 '''
 #conexion.conectar()
-santuario.ejecutar()
+interfaz.ejecutar()
 
