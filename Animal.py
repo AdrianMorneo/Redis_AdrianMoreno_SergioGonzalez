@@ -11,39 +11,56 @@ def agregarAnimal():
     apadrinado = False
     dniPadrino = ''
 
-    animal = {
-        'id': id,
-        'tipo': tipo,
-        'nombre': nombre,
-        'edad': edad,
-        'apadrinado': apadrinado,
-        'dniPadrino': dniPadrino
-    }
-
-    cnt.set(f'animal:{animal["id"]}:tipo', animal['tipo'])
-    cnt.set(f'animal:{animal["id"]}:nombre', animal['nombre'])
-    cnt.set(f'animal:{animal["id"]}:edad', str(animal['edad']))
-    cnt.set(f'animal:{animal["id"]}:apadrinado', str(animal['apadrinado']))
-    cnt.set(f'animal:{animal["id"]}:dniPadrino', animal['dniPadrino'])
+    informacionA = f"Tipo: {tipo},Nombre: {nombre},Edad: {edad},Apadrinado: {apadrinado},DniPadrino: {dniPadrino}"
+    cnt.set(id, informacionA)
 
     print(f"Animal agregado correctamente con ID: {id}")
 
-def devolverAnimal(id_animal):
-    # Obtener los valores del animal desde Redis
-    tipo = cnt.get(f'animal:{id_animal}:tipo')
-    nombre = cnt.get(f'animal:{id_animal}:nombre')
-    edad = int(cnt.get(f'animal:{id_animal}:edad'))
-    apadrinado_str = cnt.get(f'animal:{id_animal}:apadrinado')
-    apadrinado = apadrinado_str == b'True'
-    dniPadrino = cnt.get(f'animal:{id_animal}:dniPadrino')
+def buscarAnimal():
+    '''
+    Metodo para buscar un animal a traves del id
+    :param id_animal:
+    :return:
+    '''
+    nombreA = input("Introduce el nombre del animal: ")
+    keys = cnt.keys()
 
-    # Devolver un diccionario con los valores del animal
-    animal = {
-        'id': id_animal,
-        'tipo': tipo,
-        'nombre': nombre,
-        'edad': edad,
-        'apadrinado': apadrinado,
-        'dniPadrino': dniPadrino
-    }
-    return animal
+    if keys:
+        for key in keys:
+            valor = cnt.get(key)
+
+            if "Nombre: "+nombreA in valor:
+                print(f"Clave: {key}, {valor}")
+    else:
+        print("No hay animales guardados en la base de datos")
+
+def eliminarAnimal():
+    '''
+    Metodo para eliminar un animal a traves del id
+    :param id_animal:
+    :return:
+    '''
+    nombreA = input("Introduce el nombre del animal que deseas eliminar: ")
+    keys = cnt.keys()
+    if keys:
+        for key in keys:
+            valor = cnt.get(key)
+
+            if "Nombre: "+nombreA in valor:
+                cnt.delete(key)
+                print("animal borrado")
+    else:
+        print("No hay animales guardados en la base de datos")
+
+def mostrarTodos():
+    # Obtener todas las claves de Redis que corresponden a animales
+    keys = cnt.keys()
+
+    if keys:
+        print("Animales guardados en la base de datos:\n")
+        for key in keys:
+            valor = cnt.get(key)
+            # Imprimir la clave y su valor asociado
+            print(f"Clave: {key}, {valor}")
+    else:
+        print("No hay animales guardados en la base de datos")

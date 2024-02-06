@@ -115,17 +115,19 @@ def ejecutar():
                     a.agregarAnimal()
 
                 elif opcion_animales == "2":
-                    print("")
+                    print("Has seleccionado eliminar Animal")
+                    a.eliminarAnimal()
 
                 elif opcion_animales == "3":
                     print("")
 
                 elif opcion_animales == "4":
-                    print("")
+                    print("Has seleccionado buscar Animal")
+                    a.buscarAnimal()
 
                 elif opcion_animales == "5":
                     print("Has seleccionado mostrar todos los animales")
-                    a.mostrarTodosA()
+                    a.mostrarTodos()
 
                 else:
                     print(Fore.RED + "Opción no válida." + Style.RESET_ALL)
