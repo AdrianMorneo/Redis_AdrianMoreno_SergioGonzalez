@@ -119,7 +119,8 @@ def ejecutar():
                     a.eliminarAnimal()
 
                 elif opcion_animales == "3":
-                    print("")
+                    print("Has seleccionado modificar Animal")
+                    a.modificarAnimal()
 
                 elif opcion_animales == "4":
                     print("Has seleccionado buscar Animal")
@@ -130,7 +131,7 @@ def ejecutar():
                     a.mostrarTodos()
 
                 else:
-                    print(Fore.RED + "Opción no válida." + Style.RESET_ALL)
+                    print(Fore.RED + "Opcion no valida." + Style.RESET_ALL)
 
         elif opcion_principal == "2":
             while True:
