@@ -157,14 +157,25 @@ def ejecutar():
 
                     print(Fore.GREEN + "Colaborador: " + Style.RESET_ALL)
                     colaborador = c.buscar()
+                            # Imprimir cada parte del colaborador
+                    print("DNI:", colaborador["dni"])
+                    print("Nombre:", colaborador["nombre"])
+                    print("Apellido:", colaborador["apellido"])
+                    print("Teléfono:", colaborador["telefono"])
+                    print("Fecha de inscripción:", colaborador["fechaInscripcion"])
 
                 elif opcion_colaboradores == "5":
                     colaboradores = c.mostrarTodos()
                     print(Fore.GREEN + "Colaboradores registrados:" + Style.RESET_ALL)
-                    print(colaboradores)
+
                     for cola in colaboradores:
 
-                        print(cola)
+                        print("DNI:", cola["dni"])
+                        print("Nombre:", cola["nombre"])
+                        print("Apellido:", cola["apellido"])
+                        print("Teléfono:", cola["telefono"])
+                        print("Fecha de inscripción:", cola["fechaInscripcion"])
+                        print("\n")
 
                 else:
                     print(Fore.RED + "Opción no válida." + Style.RESET_ALL)

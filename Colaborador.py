@@ -4,6 +4,7 @@ import Conexion as cx
 
 import Utiles as ut
 
+import json
 
 con = cx.conectar()
 
@@ -16,49 +17,52 @@ def nuevo():
 
         while not finEntradaAlta and fallos < 5:
             dni = input("\nDNI:").strip().upper()
-            if ut.validarDNI(dni):
-                if not buscar(dni):
-                    print("\t\tDNI Valido\n")
-                    finEntradaAlta = True
-                else:
-                    fallos = ut.fallo(fallos, "DNI está ya en la BBDD")
+            # Comprueba si el DNI tiene un formato válido
+            if len(dni) == 9 and dni[:8].isdigit() and dni[8].isalpha():
+                print("\t\tDNI Valido\n")
+                finEntradaAlta = True
             else:
-                fallos = ut.fallo(fallos, "El DNI debe tener 8 numeros y una letra")
+                fallos += 1
+                print("El DNI debe tener 8 números seguidos de una letra.")
+                if fallos >= 5:
+                    print("Demasiados fallos. Abortando.")
+                    return
 
         finEntradaAlta = False
 
         if fallos < 5:
             fallos = 0
             while not finEntradaAlta and fallos < 5:
-
                 nombre = input("Nombre: ").strip().upper()
-                if ut.validarNombre(nombre):
+                # Comprueba si el nombre tiene al menos 2 caracteres
+                if len(nombre) >= 2:
                     print("\t\tNombre Valido\n")
                     finEntradaAlta = True
                 else:
-                    fallos = ut.fallo(fallos, "El nombre debe contener al menos 2 caracteres.")
+                    fallos += 1
+                    print("El nombre debe contener al menos 2 caracteres.")
 
         finEntradaAlta = False
         if fallos < 5:
             fallos = 0
             while not finEntradaAlta and fallos < 5:
-                apellido = input("Apellido:")
-                if ut.validarNombre(apellido):
+                apellido = input("Apellido:").strip().upper()
+                # Comprueba si el apellido tiene al menos 2 caracteres
+                if len(apellido) >= 2:
                     print("\t\tApellido Valido\n")
                     finEntradaAlta = True
                 else:
-                    fallos = ut.fallo(fallos, "El nombre debe contener al menos 2 caracteres.")
+                    fallos += 1
+                    print("El apellido debe contener al menos 2 caracteres.")
 
         finEntradaAlta = False
         if fallos < 5:
             fallos = 0
             while not finEntradaAlta and fallos < 5:
                 telefono = input("Telefono:")
-                if ut.validarTelefono(telefono):
-                    print("\t\tTelefono Valido\n")
-                    finEntradaAlta = True
-                else:
-                    fallos = ut.fallo(fallos, "El nombre debe contener al menos 2 caracteres.")
+                # No se realiza validación para el teléfono en este ejemplo
+                print("\t\tTelefono Valido\n")
+                finEntradaAlta = True
 
         fechaInscripcion = datetime.now().strftime("%d-%m-%Y")
 
@@ -70,22 +74,27 @@ def nuevo():
             'telefono': telefono,
             'fechaInscripcion': fechaInscripcion
         }
-        print(colaborador.keys())
-        print(colaborador)
-        key = f'colaborador:{dni}'
-        con.hset(key, "dni", colaborador['dni'])
-        con.hset(key, "nombre", colaborador['nombre'])
-        con.hset(key, "apellido", colaborador['apellido'])
-        con.hset(key, "telefono", colaborador['telefono'])
-        con.hset(key, "fechaInscripcion", colaborador['fechaInscripcion'])
+
+        # Convertir el diccionario a formato JSON
+        colaborador_json = json.dumps(colaborador)
+
+        # Guardar el colaborador en Redis
+        con.set("colaborador:" + dni, colaborador_json)
+        print(dni)
+        print (colaborador_json)
+
+        print("Colaborador guardado exitosamente en Redis.")
+
 
 
 def borrar():
     dni = input("DNI: ")
-    if dni != "":
+    colaborador = buscar()
+    if colaborador is not None:
         if ut.confirmacion("Seguro que quieres ELIMINAR el Colaborador?",
                            f"Eliminacion del Colaborador: {dni} realizada"):
             try:
+                con.delete(colaborador)
                 print("eliminar colaborador")
             except Exception as errorEliminar:
                 print(f"Error al eliminar el colaborador")
@@ -95,24 +104,29 @@ def modificar():
     None
 
 
-def buscar(dni):
-    return False
+def buscar():
+    dni = input("Introduce DNI:").upper()
+     # Obtener el objeto colaborador en formato JSON desde Redis
+    colaborador_json = con.get(f"colaborador:{dni}")
 
+    # Verificar si el colaborador existe
+    if colaborador_json:
+        # Deserializar el JSON a un diccionario de Python
+        colaborador = json.loads(colaborador_json)
+        return colaborador
+    else:
+        print("El colaborador con DNI", dni, "no se encontró en la base de datos.")
+        return None
 
-def hgetall(key):
-    # Método para obtener todos los campos y valores de un hash en Redis
-    return con.hgetall(key)
 
 
 def mostrarTodos():
-    # Obtener todas las claves que coinciden con el patrón "colaborador:*"
     keys = con.keys("colaborador:*")
-
-    # Obtener información de todos los colaboradores
     colaboradores_info = []
     for key in keys:
-        # Obtener información de cada colaborador
-        colaborador_info = con.hgetall(key)
-        colaboradores_info.append(colaborador_info)
-
+        colaborador_json = con.get(key)
+        if colaborador_json:
+            colaborador = json.loads(colaborador_json)
+            colaboradores_info.append(colaborador)
     return colaboradores_info
+
