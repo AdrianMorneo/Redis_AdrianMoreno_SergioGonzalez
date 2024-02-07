@@ -49,10 +49,9 @@ def agregarAnimal():
 
     if fallos < 5:
         id = cnt.incr('idAnimal')
-        apadrinado = "---"
-        dniPadrino = "---"
+        dniPadrino = "Vacio"
 
-        informacionA = f"\nTipo: {tipo}\nNombre: {nombre}\nEdad: {edad}\nApadrinado: {apadrinado}\nDniPadrino: {dniPadrino}\n"
+        informacionA = f"\nTipo: {tipo}\nNombre: {nombre}\nEdad: {edad}\nDniPadrino: {dniPadrino}\n"
         cnt.set("A"+str(id), informacionA)
         print(f"\t\tAnimal {nombre} agregado correctamente con ID: {id}")
 
@@ -71,7 +70,7 @@ def buscarAnimal():
                 valor = cnt.get(key)
 
                 if "Nombre: " + nombreA in valor:
-                    print(f"Clave: {key}, {valor}")
+                    print(f"Clave: {key} {valor}")
         else:
             print("No hay animales guardados en la base de datos")
     else:
@@ -116,7 +115,6 @@ def mostrarTodos():
             print(f"Id: {key} {valor}")
     else:
         print("No hay animales guardados en la base de datos")
-
 
 def comprobarAnimal(nombreA):
     '''
@@ -206,3 +204,37 @@ def modificarA(clave , campo ):
             cnt.set(clave, valoresAnimal2)
         else:
             print("Operacion anulada")
+
+
+
+def asignarPadrino():
+    animalN = input("Introduce el nombre del animal al que deseas asignar un padrino")
+    anim = comprobarAnimal(animalN)
+    if anim[0]:
+
+
+
+
+def comprobarPadrino(dniPadrino):
+    mensaje=''
+    #primero comprueba si es un dni para despues comprobar si esta registrado en la BBDD
+    if ut.validarDNI(dniPadrino):
+        keys = cnt.keys()
+        for key in keys:
+            if key == dniPadrino:
+                return True
+            else:
+                #dni no encontrado
+                mensaje = "Dni no encontrado en la bbdd"
+                return False, mensaje
+    else:
+        #dni no valido
+        mensaje = "Formato del dni no valido"
+        return False, mensaje
+
+
+
+
+
+
+
