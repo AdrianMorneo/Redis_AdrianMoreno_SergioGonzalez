@@ -211,7 +211,7 @@ def asignarPadrino():
     animalN = input("Introduce el nombre del animal al que deseas asignar un padrino")
     anim = comprobarAnimal(animalN)
     if anim[0]:
-
+        print("")
 
 
 
