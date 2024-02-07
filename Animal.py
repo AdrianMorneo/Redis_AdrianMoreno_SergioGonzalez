@@ -210,14 +210,31 @@ def modificarA(clave , campo ):
 def asignarPadrino():
     animalN = input("Introduce el nombre del animal al que deseas asignar un padrino")
     anim = comprobarAnimal(animalN)
+    #comprueba si el animal seleccionado ya tiene un padrino asignado y avisa
     if anim[0]:
-        print("")
-
-
+        valoresAnimal = cnt.get(clave).split('\n')
+        if not "Vacio" in valoresAnimal[3]:
+            dniP = input(f"Introduce el Dni del padrino que deseas asignarle al animal {valoresAnimal[1]}")
+            existeP = comprobarPadrino(dniP)
+            if existeP[0]:
+                print(f"Este animal ya contiene un padrino: {valoresAnimal[3]} , se sustituira")
+                conf = ut.confirmacion(f"Seguro que deseas sustituit?", "Asignacion de Padrino")
+                    if conf:
+                        #coger el elemento de dniPadrino de valorAnimal e asignarle el valor dniP
+                        #guardar toda la cadena con eso nuevo y hacer set con anim[0] que es la clave y valoresAnimal/2
+                        print("")
+                    else:
+                        print("Operacion Denegada")
+            else:
+                print(existeP[1])
+        else:
+            print("")
+    else:
+        print(f"El animal con el nombre {animalN} no existe")
 
 def comprobarPadrino(dniPadrino):
     mensaje=''
-    #primero comprueba si es un dni para despues comprobar si esta registrado en la BBDD
+    #Primero comprueba si es un dni para despues comprobar si esta registrado en la BBDD
     if ut.validarDNI(dniPadrino):
         keys = cnt.keys()
         for key in keys:
