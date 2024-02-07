@@ -7,7 +7,6 @@ import Utiles as ut
 
 con = cx.conectar()
 
-
 def nuevo():
     finAlta = False
     while not finAlta:
@@ -18,7 +17,7 @@ def nuevo():
         while not finEntradaAlta and fallos < 5:
             dni = input("\nDNI:").strip().upper()
             if ut.validarDNI(dni):
-                if not Colaborador.buscar(self, dni):
+                if not buscar(dni):
                     print("\t\tDNI Valido\n")
                     finEntradaAlta = True
                 else:
@@ -71,8 +70,10 @@ def nuevo():
             'telefono': telefono,
             'fechaInscripcion': fechaInscripcion
         }
+        print(colaborador.keys())
         print(colaborador)
         key = f'colaborador:{dni}'
+        con.hset(key, "dni", colaborador['dni'])
         con.hset(key, "nombre", colaborador['nombre'])
         con.hset(key, "apellido", colaborador['apellido'])
         con.hset(key, "telefono", colaborador['telefono'])
@@ -104,9 +105,14 @@ def hgetall(key):
 
 
 def mostrarTodos():
+    # Obtener todas las claves que coinciden con el patrón "colaborador:*"
     keys = con.keys("colaborador:*")
 
     # Obtener información de todos los colaboradores
-    colaboradores_info = [hgetall(key) for key in keys]
+    colaboradores_info = []
+    for key in keys:
+        # Obtener información de cada colaborador
+        colaborador_info = con.hgetall(key)
+        colaboradores_info.append(colaborador_info)
 
     return colaboradores_info

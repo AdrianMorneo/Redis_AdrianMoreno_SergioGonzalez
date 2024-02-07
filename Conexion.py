@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 
 import redis
-
+import Utiles as ut
 
 def conectar():
     configuracion = ConfigParser()
@@ -26,3 +26,8 @@ def hgetall(self, clave):
 def keys(self, pattern):
     # Método para obtener todas las claves que coinciden con el patron en Redis
     return self.conectar().keys(pattern)
+
+def borrarBase():
+    if ut.confirmacion("Borrar", "BBDD"):
+        con= conectar()
+        con.flushdb()

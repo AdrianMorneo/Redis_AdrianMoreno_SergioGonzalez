@@ -17,9 +17,6 @@ init(autoreset=True)  # Inicialización de Colorama -- init(autoreset=True) que 
 # Representa la aplicación principal del santuario de animales.
 
 #  Inicializa las listas de animales y colaboradores, así como las instancias de Figlet para diferentes estilos de fuentes.
-def __init__():
-    animales = []
-    colaboradores = []
 
 
 # Imprime un mensaje de bienvenida utilizando la función tprint con el nombre del santuario y los nombres "Adrian y Sergio".
@@ -38,6 +35,8 @@ def imprimir_menu_principal():
         "\t\t" + Fore.YELLOW + "║║\t  " + Fore.LIGHTWHITE_EX + " 1. " + Fore.LIGHTYELLOW_EX + "Animales" + Style.RESET_ALL + Fore.YELLOW + "             ║║")
     print(
         "\t\t" + Fore.YELLOW + "║║\t  " + Fore.LIGHTWHITE_EX + " 2. " + Fore.LIGHTYELLOW_EX + "Colaboradores" + Style.RESET_ALL + Fore.YELLOW + "        ║║")
+    print(
+        "\t\t" + Fore.YELLOW + "║║\t  " + Fore.LIGHTWHITE_EX + " 3. " + Fore.LIGHTYELLOW_EX + "Borrar BBDD" + Style.RESET_ALL + Fore.YELLOW + "          ║║")
     print(
         "\t\t" + Fore.YELLOW + "║║\t  " + Fore.LIGHTWHITE_EX + " 0. " + Fore.RED + "Salir" + Style.RESET_ALL + Fore.YELLOW + "                ║║")
     print("\t\t" + Fore.YELLOW + "║╚═════════════════════════════╝║")
@@ -73,17 +72,17 @@ def imprimir_menu_colaboradores():
     print("\t\t" + Fore.BLUE + "╔═══════════════════════════════════════════╗")
     print("\t\t" + Fore.BLUE + "║╔═════════════════════════════════════════╗║")
     print(
-        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 1. " + Fore.LIGHTBLUE_EX + "Agregar un colaborador" + Style.RESET_ALL + Fore.BLUE + "              ║║")
+        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 1. " + Fore.LIGHTBLUE_EX + "Agregar un colaborador" + Style.RESET_ALL + Fore.BLUE + "             ║║")
     print(
-        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 2. " + Fore.LIGHTBLUE_EX + "Eliminar un colaborador" + Style.RESET_ALL + Fore.BLUE + "             ║║")
+        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 2. " + Fore.LIGHTBLUE_EX + "Eliminar un colaborador" + Style.RESET_ALL + Fore.BLUE + "            ║║")
     print(
-        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 3. " + Fore.LIGHTBLUE_EX + "Modificar un colaborador" + Style.RESET_ALL + Fore.BLUE + "            ║║")
+        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 3. " + Fore.LIGHTBLUE_EX + "Modificar un colaborador" + Style.RESET_ALL + Fore.BLUE + "           ║║")
     print(
-        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 4. " + Fore.LIGHTBLUE_EX + "Buscar un colaborador" + Style.RESET_ALL + Fore.BLUE + "               ║║")
+        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 4. " + Fore.LIGHTBLUE_EX + "Buscar un colaborador" + Style.RESET_ALL + Fore.BLUE + "              ║║")
     print(
-        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 5. " + Fore.LIGHTBLUE_EX + "Mostrar todos los colaboradores" + Style.RESET_ALL + Fore.BLUE + "     ║║")
+        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 5. " + Fore.LIGHTBLUE_EX + "Mostrar todos los colaboradores" + Style.RESET_ALL + Fore.BLUE + "    ║║")
     print(
-        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 0. " + Fore.RED + "Volver al menú principal" + Style.RESET_ALL + Fore.BLUE + "            ║║")
+        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 0. " + Fore.RED + "Volver al menú principal" + Style.RESET_ALL + Fore.BLUE + "           ║║")
     print("\t\t" + Fore.BLUE + "║╚═════════════════════════════════════════╝║")
     print("\t\t" + Fore.BLUE + "╚═══════════════════════════════════════════╝")
 
@@ -143,29 +142,35 @@ def ejecutar():
                     break
 
                 elif opcion_colaboradores == "1":
-                    colaborador.nuevo()
+                    c.nuevo()
                     print(Fore.GREEN + "Nuevo colaborador REGISTRADO" + Style.RESET_ALL)
 
                 elif opcion_colaboradores == "2":
-                    colaborador.borrar()
+                    c.borrar()
                     print(Fore.GREEN + "Colaborador ELIMINADO" + Style.RESET_ALL)
 
                 elif opcion_colaboradores == "3":
-                    colaborador.modificar()
+                    c.modificar()
                     print(Fore.GREEN + "Colaborador MODIFICADO" + Style.RESET_ALL)
 
                 elif opcion_colaboradores == "4":
 
                     print(Fore.GREEN + "Colaborador: " + Style.RESET_ALL)
-                    colaborador = colaborador.buscar()
+                    colaborador = c.buscar()
 
                 elif opcion_colaboradores == "5":
-                    colaboradores = colaborador.mostrarTodos()
+                    colaboradores = c.mostrarTodos()
                     print(Fore.GREEN + "Colaboradores registrados:" + Style.RESET_ALL)
                     print(colaboradores)
+                    for cola in colaboradores:
+
+                        print(cola)
 
                 else:
                     print(Fore.RED + "Opción no válida." + Style.RESET_ALL)
+
+        elif opcion_principal == "3":
+            cx.borrarBase()
 
         else:
             print(Fore.RED + "Opción no válida." + Style.RESET_ALL)
