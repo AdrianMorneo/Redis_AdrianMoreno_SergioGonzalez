@@ -27,7 +27,7 @@ def validarTelefono(telefono):
     """
     return len(telefono) == 9 and telefono.isdigit()
 
-def validarFechaNacimiento(fecha_nacimiento):
+def validarFecha(fecha):
     # Validar que la fecha de nacimiento sea anterior al 2020
     """
     Comprueba que una fecha sea valida
@@ -35,7 +35,7 @@ def validarFechaNacimiento(fecha_nacimiento):
     :return: True o False en funcion de si es valida o no
     """
     try:
-        fecha_nac = datetime.strptime(fecha_nacimiento, '%d-%m-%Y')
+        fecha_nac = datetime.strptime(fecha, '%d-%m-%Y')
         return 2025 > fecha_nac.year > 1950
     except ValueError:
         return False

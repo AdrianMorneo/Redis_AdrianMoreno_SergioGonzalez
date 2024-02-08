@@ -206,7 +206,7 @@ def modificarA(clave , campo ):
             print("Operacion anulada")
 
 
-
+'''
 def asignarPadrino():
     animalN = input("Introduce el nombre del animal al que deseas asignar un padrino")
     anim = comprobarAnimal(animalN)
@@ -231,7 +231,7 @@ def asignarPadrino():
             print("")
     else:
         print(f"El animal con el nombre {animalN} no existe")
-
+'''
 def comprobarPadrino(dniPadrino):
     mensaje=''
     #Primero comprueba si es un dni para despues comprobar si esta registrado en la BBDD

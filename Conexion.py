@@ -7,27 +7,20 @@ def conectar():
     configuracion = ConfigParser()
     configuracion.read("ConexionConfig.ini")
 
-    con = redis.StrictRedis(host=configuracion.get('conexion', 'host'),
-                            port=configuracion.getint('conexion', 'puerto'),
-                            db=configuracion.getint('conexion', 'db'),
-                            decode_responses=True)
+    try:
+        con = redis.StrictRedis(host=configuracion.get('conexion', 'host'),
+                                port=configuracion.getint('conexion', 'puerto'),
+                                db=configuracion.getint('conexion', 'db'),
+                                decode_responses=True)
+        return con
 
-    return con
+    except redis.ConnectionError as e:
+        # Captura la excepción ConnectionError cuando falla la conexión a Redis
+        print("Error de conexión a Redis:", e)
+        return None
 
-
-def hset(self, clave, campo, valor):
-    self.conectar().hset(clave, campo, valor)
-
-
-def hgetall(self, clave):
-    return self.conectar().hgetall(clave)
-
-
-def keys(self, pattern):
-    # Método para obtener todas las claves que coinciden con el patron en Redis
-    return self.conectar().keys(pattern)
 
 def borrarBase():
-    if ut.confirmacion("Borrar", "BBDD"):
-        con= conectar()
+    if ut.confirmacion("Borrar", "Eliminación de BBDD"):
+        con = conectar()
         con.flushdb()

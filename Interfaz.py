@@ -82,6 +82,10 @@ def imprimir_menu_colaboradores():
     print(
         "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 5. " + Fore.LIGHTBLUE_EX + "Mostrar todos los colaboradores" + Style.RESET_ALL + Fore.BLUE + "    ║║")
     print(
+        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 6. " + Fore.LIGHTBLUE_EX + "Apadrinar animal =)" + Style.RESET_ALL + Fore.BLUE + "                ║║")
+    print(
+        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 7. " + Fore.LIGHTBLUE_EX + "Desapadrinar animal :(" + Style.RESET_ALL + Fore.BLUE + "             ║║")
+    print(
         "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 0. " + Fore.RED + "Volver al menú principal" + Style.RESET_ALL + Fore.BLUE + "           ║║")
     print("\t\t" + Fore.BLUE + "║╚═════════════════════════════════════════╝║")
     print("\t\t" + Fore.BLUE + "╚═══════════════════════════════════════════╝")
@@ -142,41 +146,79 @@ def ejecutar():
                     break
 
                 elif opcion_colaboradores == "1":
-                    c.nuevo()
-                    print(Fore.GREEN + "Nuevo colaborador REGISTRADO" + Style.RESET_ALL)
+
+                    registro = c.nuevo()
+                    if registro:
+                        print(Fore.GREEN + "Nuevo colaborador REGISTRADO" + Style.RESET_ALL)
+                    else:
+                        print(Fore.RED + "Colaborador NO REGISTRADO" + Style.RESET_ALL)
+
 
                 elif opcion_colaboradores == "2":
-                    c.borrar()
-                    print(Fore.GREEN + "Colaborador ELIMINADO" + Style.RESET_ALL)
+                    colaboradores = c.mostrarTodos()
+                    if colaboradores:
+                        eliminado = c.borrar()
+                        if eliminado:
+                            print(Fore.GREEN + "Colaborador ELIMINADO" + Style.RESET_ALL)
+                        else:
+                            print(Fore.RED + "Colaborador NO ELIMINADO" + Style.RESET_ALL)
+                    else:
+                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
                 elif opcion_colaboradores == "3":
-                    c.modificar()
-                    print(Fore.GREEN + "Colaborador MODIFICADO" + Style.RESET_ALL)
+                    colaboradores = c.mostrarTodos()
+                    if colaboradores:
+                        c.modificar()
+                        print(Fore.GREEN + "Colaborador MODIFICADO" + Style.RESET_ALL)
+                    else:
+                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
                 elif opcion_colaboradores == "4":
-
-                    print(Fore.GREEN + "Colaborador: " + Style.RESET_ALL)
-                    colaborador = c.buscar()
-                            # Imprimir cada parte del colaborador
-                    print("DNI:", colaborador["dni"])
-                    print("Nombre:", colaborador["nombre"])
-                    print("Apellido:", colaborador["apellido"])
-                    print("Teléfono:", colaborador["telefono"])
-                    print("Fecha de inscripción:", colaborador["fechaInscripcion"])
+                    colaboradores = c.mostrarTodos()
+                    if colaboradores:
+                        print(Fore.GREEN + "Colaborador: " + Style.RESET_ALL)
+                        colaborador = c.buscar()
+                        if colaborador:
+                                    # Imprimir cada parte del colaborador
+                            print("DNI:", colaborador["dni"])
+                            print("Nombre:", colaborador["nombre"])
+                            print("Apellido:", colaborador["apellido"])
+                            print("Teléfono:", colaborador["telefono"])
+                            print("Fecha de inscripción:", colaborador["fechaInscripcion"])
+                        else:
+                            print(Fore.RED + "No se encontró ningún colaborador" + Style.RESET_ALL)
+                    else:
+                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
                 elif opcion_colaboradores == "5":
                     colaboradores = c.mostrarTodos()
-                    print(Fore.GREEN + "Colaboradores registrados:" + Style.RESET_ALL)
+                    if colaboradores:
+                        print(Fore.GREEN + "Colaboradores registrados:" + Style.RESET_ALL)
 
-                    for cola in colaboradores:
+                        for cola in colaboradores:
 
-                        print("DNI:", cola["dni"])
-                        print("Nombre:", cola["nombre"])
-                        print("Apellido:", cola["apellido"])
-                        print("Teléfono:", cola["telefono"])
-                        print("Fecha de inscripción:", cola["fechaInscripcion"])
-                        print("\n")
+                            print("DNI:", cola["dni"])
+                            print("Nombre:", cola["nombre"])
+                            print("Apellido:", cola["apellido"])
+                            print("Teléfono:", cola["telefono"])
+                            print("Fecha de inscripción:", cola["fechaInscripcion"])
+                            print("\n")
+                    else:
+                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
+                elif opcion_colaboradores == "6":
+                    colaboradores = c.mostrarTodos()
+                    if colaboradores:
+                        print("Has seleccionado apadrinar")
+                    else:
+                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
+
+                elif opcion_colaboradores == "7":
+                    colaboradores = c.mostrarTodos()
+                    if colaboradores:
+                        print("Has seleccionado desapadrinar")
+                    else:
+                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
                 else:
                     print(Fore.RED + "Opción no válida." + Style.RESET_ALL)
 
