@@ -5,7 +5,7 @@ from pyfiglet import Figlet
 import os
 
 import Animal as a
-import Colaborador as c
+import ColaboradorConsola as c
 import Conexion as cx
 
 

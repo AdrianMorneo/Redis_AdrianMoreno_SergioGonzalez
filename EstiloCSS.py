@@ -67,4 +67,17 @@ def cogerEstiloColaboradores():
         QPushButton:pressed {
             background-color: #74412b;
         }
+
+        QLabel {
+            font-size: 16px;
+            color: white;
+        }
+
+        QLineEdit {
+            font-size: 16px;
+            background-color: #d9d9d9;
+            border: 2px solid #be8260;
+            border-radius: 5px;
+            padding: 5px;
+        }
     """

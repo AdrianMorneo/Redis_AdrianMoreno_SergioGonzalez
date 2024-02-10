@@ -1,7 +1,8 @@
 
 import Interfaz as interfaz
 
-import InterfazGrafica as ig
+from Vista import InterfazGrafica as ig
+
 opcion = ""
 
 
@@ -15,8 +16,9 @@ while opcion != "1" and opcion != "2" and opcion != "0":
     if opcion == "1":
         interfaz.ejecutar()
     elif opcion == "2":
+        print("Abre la ventana gráfica. "
+              "\nSe abrió una aplicación de python, en tu barra de escritorio")
         ig.mensajeBienvenida()
-        print("Abre la ventana gráfica")
     elif opcion == "0":
         print("Saliste de la Aplicación")
     else:
