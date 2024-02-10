@@ -60,6 +60,10 @@ def imprimir_menu_animales():
     print(
         "\t\t" + Fore.GREEN + "║║\t" + Fore.LIGHTWHITE_EX + " 5. " + Fore.LIGHTGREEN_EX + "Mostrar todos los animales" + Style.RESET_ALL + Fore.GREEN + "     ║║")
     print(
+        "\t\t" + Fore.GREEN + "║║\t" + Fore.LIGHTWHITE_EX + " 6. " + Fore.LIGHTGREEN_EX + "Apadrinar animal =)" + Style.RESET_ALL + Fore.GREEN + "            ║║")
+    print(
+        "\t\t" + Fore.GREEN + "║║\t" + Fore.LIGHTWHITE_EX + " 7. " + Fore.LIGHTGREEN_EX + "Desapadrinar animal :(" + Style.RESET_ALL + Fore.GREEN + "         ║║")
+    print(
         "\t\t" + Fore.GREEN + "║║\t" + Fore.LIGHTWHITE_EX + " 0. " + Fore.RED + "Volver al menú principal" + Style.RESET_ALL + Fore.GREEN + "       ║║")
     print("\t\t" + Fore.GREEN + "║╚═════════════════════════════════════╝║")
     print("\t\t" + Fore.GREEN + "╚═══════════════════════════════════════╝")
@@ -81,10 +85,6 @@ def imprimir_menu_colaboradores():
         "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 4. " + Fore.LIGHTBLUE_EX + "Buscar un colaborador" + Style.RESET_ALL + Fore.BLUE + "              ║║")
     print(
         "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 5. " + Fore.LIGHTBLUE_EX + "Mostrar todos los colaboradores" + Style.RESET_ALL + Fore.BLUE + "    ║║")
-    print(
-        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 6. " + Fore.LIGHTBLUE_EX + "Apadrinar animal =)" + Style.RESET_ALL + Fore.BLUE + "                ║║")
-    print(
-        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 7. " + Fore.LIGHTBLUE_EX + "Desapadrinar animal :(" + Style.RESET_ALL + Fore.BLUE + "             ║║")
     print(
         "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 0. " + Fore.RED + "Volver al menú principal" + Style.RESET_ALL + Fore.BLUE + "           ║║")
     print("\t\t" + Fore.BLUE + "║╚═════════════════════════════════════════╝║")
@@ -132,6 +132,22 @@ def ejecutar():
                 elif opcion_animales == "5":
                     print("Has seleccionado mostrar todos los animales")
                     a.mostrarTodos()
+
+                elif opcion_animales == "6":
+                    colaboradores = c.mostrarTodos()
+                    if colaboradores:
+                        print("Has seleccionado apadrinar")
+                        a.asignarPadrino()
+                    else:
+                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
+
+                elif opcion_animales == "7":
+                    colaboradores = c.mostrarTodos()
+                    if colaboradores:
+                        print("Has seleccionado desapadrinar")
+                        a.desapadrinarAnimal()
+                    else:
+                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
                 else:
                     print(Fore.RED + "Opcion no valida." + Style.RESET_ALL)
@@ -206,19 +222,6 @@ def ejecutar():
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
-                elif opcion_colaboradores == "6":
-                    colaboradores = c.mostrarTodos()
-                    if colaboradores:
-                        print("Has seleccionado apadrinar")
-                    else:
-                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
-
-                elif opcion_colaboradores == "7":
-                    colaboradores = c.mostrarTodos()
-                    if colaboradores:
-                        print("Has seleccionado desapadrinar")
-                    else:
-                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
                 else:
                     print(Fore.RED + "Opción no válida." + Style.RESET_ALL)
 

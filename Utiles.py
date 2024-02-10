@@ -1,5 +1,14 @@
 from datetime import datetime
 
+def validarTipoA(tipo):
+    tipos_animales = ["mamifero", "ave", "pez", "reptil", "anfibio"]
+
+    if tipo in tipos_animales:
+        return True
+    else:
+        return False
+
+
 def validarDNI(dni):
     # Validar DNI con 8 números y una letra al final
     """
