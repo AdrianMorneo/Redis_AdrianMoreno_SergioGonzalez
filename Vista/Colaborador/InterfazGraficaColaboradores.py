@@ -1,6 +1,7 @@
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QLabel, QLineEdit
 from . import AgregarColaborador as ac
+from . import MostrarTodosColaboradores as mt
 
 # Importamos el archivo EstiloCSS
 import EstiloCSS as css
@@ -21,6 +22,7 @@ def handleSearchCollaboratorClick():
 
 def handleShowAllCollaboratorsClick():
     print("Mostrar todos los colaboradores")
+    mt.mostrarColaboradoresWindows()
 
 def handleSponsorAnimalClick():
     print("Apadrinar animal =)")

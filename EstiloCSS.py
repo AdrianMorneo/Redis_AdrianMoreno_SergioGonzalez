@@ -49,6 +49,7 @@ def cogerEstiloColaboradores():
     return """
         QMainWindow {
             background-color: #253f5b;
+            color: white;
         }
 
         QPushButton {
@@ -70,7 +71,11 @@ def cogerEstiloColaboradores():
 
         QLabel {
             font-size: 16px;
-            color: white;
+            color: black; /* Cambio de color de texto */
+            background-color: white; /* Fondo blanco */
+            border: 2px solid black; /* Borde negro */
+            border-radius: 5px;
+            padding: 5px;
         }
 
         QLineEdit {
@@ -80,4 +85,36 @@ def cogerEstiloColaboradores():
             border-radius: 5px;
             padding: 5px;
         }
+
+        QScrollArea {
+            background-color: #f5f5f5;
+        }
+
+        QScrollBar:vertical {
+            background-color: #e0e0e0;
+            width: 10px;
+            margin: 0px 0px 0px 0px;
+        }
+
+        QScrollBar::handle:vertical {
+            background-color: #be8260;
+            min-height: 20px;
+            border-radius: 5px;
+        }
+
+        QScrollBar::add-line:vertical {
+            background-color: #f5f5f5;
+            height: 0px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
+        }
+
+        QScrollBar::sub-line:vertical {
+            background-color: #f5f5f5;
+            height: 0px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+        }
     """
+
+

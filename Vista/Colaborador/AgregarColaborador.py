@@ -3,6 +3,7 @@ from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QLabel, QLineEdit, QPush
 import EstiloCSS as css
 import ColaboradorGrafico as cg
 import Utiles as ut
+import ColaboradorConsola as cc
 
 # Función para manejar el evento de agregar un colaborador
 def handleAgregar(dni, nombre, apellido, telefono):
@@ -13,6 +14,12 @@ def handleAgregar(dni, nombre, apellido, telefono):
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Alerta")
         alerta.setText("DNI no válido, (00000000A)")
+        alerta.exec_()
+    elif cc.comprobarDNIBBDD(dni):
+        alerta = QMessageBox()
+        alerta.setIcon(QMessageBox.Warning)
+        alerta.setWindowTitle("Alerta")
+        alerta.setText("DNI ya introducido en la BBDD")
         alerta.exec_()
     elif not ut.validarNombre(nombre):
         # Si el Nombre no es válido, mostrar una alerta
@@ -28,7 +35,7 @@ def handleAgregar(dni, nombre, apellido, telefono):
         alerta.setWindowTitle("Alerta")
         alerta.setText("Apellido no válido, mínimo 2 dígitos")
         alerta.exec_()
-    elif not ut.validarNombre(telefono):
+    elif not ut.validarTelefono(telefono):
         # Si el telefono no es válido, mostrar una alerta
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
@@ -69,22 +76,22 @@ def showAddCollaboratorWindow():
     layout = QVBoxLayout()
 
     # Creamos etiquetas y campos de entrada para nombre, apellido y teléfono
-    dniLabel = QLabel("DNI:")
+    dniLabel = QLabel("DNI: (00000000A)")
     layout.addWidget(dniLabel)
     dni = QLineEdit()
     layout.addWidget(dni)
 
-    nombreLabel = QLabel("Nombre:")
+    nombreLabel = QLabel("Nombre: (mínimo 2 letras)")
     layout.addWidget(nombreLabel)
     nombre = QLineEdit()
     layout.addWidget(nombre)
 
-    apellidoLabel = QLabel("Apellido:")
+    apellidoLabel = QLabel("Apellido: (mínimo 2 letras)")
     layout.addWidget(apellidoLabel)
     apellido = QLineEdit()
     layout.addWidget(apellido)
 
-    telefonoLabel = QLabel("Teléfono:")
+    telefonoLabel = QLabel("Teléfono: (9 dígitos)")
     layout.addWidget(telefonoLabel)
     telefono = QLineEdit()
     layout.addWidget(telefono)
