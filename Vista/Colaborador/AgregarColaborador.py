@@ -1,13 +1,13 @@
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QLabel, QLineEdit, QPushButton, QWidget, QMessageBox
-import EstiloCSS as css
-import ColaboradorGrafico as cg
-import Utiles as ut
-import ColaboradorConsola as cc
+import EstiloCSS as css  # Importar un módulo EstiloCSS para el estilo de la interfaz de usuario
+import ColaboradorGrafico as cg  # Importar módulo para manejar la lógica de colaboradores
+import Utiles as ut  # Importar módulo con funciones útiles
+import ColaboradorConsola as cc  # Importar módulo para manejar la lógica de colaboradores en la consola
 
 # Función para manejar el evento de agregar un colaborador
 def handleAgregar(dni, nombre, apellido, telefono):
-
+    # Validación del DNI
     if not ut.validarDNI(dni):
         # Si el DNI no es válido, mostrar una alerta
         alerta = QMessageBox()
@@ -15,12 +15,15 @@ def handleAgregar(dni, nombre, apellido, telefono):
         alerta.setWindowTitle("Alerta")
         alerta.setText("DNI no válido, (00000000A)")
         alerta.exec_()
+    # Comprobar si el DNI ya está en la base de datos
     elif cc.comprobarDNIBBDD(dni):
+        # Si el DNI ya existe en la base de datos, mostrar una alerta
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Alerta")
         alerta.setText("DNI ya introducido en la BBDD")
         alerta.exec_()
+    # Validación del nombre
     elif not ut.validarNombre(nombre):
         # Si el Nombre no es válido, mostrar una alerta
         alerta = QMessageBox()
@@ -28,6 +31,7 @@ def handleAgregar(dni, nombre, apellido, telefono):
         alerta.setWindowTitle("Alerta")
         alerta.setText("Nombre no válido, mínimo 2 dígitos")
         alerta.exec_()
+    # Validación del apellido
     elif not ut.validarNombre(apellido):
         # Si el Apellido no es válido, mostrar una alerta
         alerta = QMessageBox()
@@ -35,14 +39,16 @@ def handleAgregar(dni, nombre, apellido, telefono):
         alerta.setWindowTitle("Alerta")
         alerta.setText("Apellido no válido, mínimo 2 dígitos")
         alerta.exec_()
+    # Validación del teléfono
     elif not ut.validarTelefono(telefono):
-        # Si el telefono no es válido, mostrar una alerta
+        # Si el teléfono no es válido, mostrar una alerta
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Alerta")
         alerta.setText("Telefono no válido, deben ser 9 dígitos")
         alerta.exec_()
     else:
+        # Si todos los datos son válidos, agregar el colaborador
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Colaborador Agregado")
@@ -51,31 +57,21 @@ def handleAgregar(dni, nombre, apellido, telefono):
         print("Agregado")
         alerta.exec_()
 
-
-
-
-# Función para manejar el evento de agregar colaborador
-def handleAgregarButtonClick(dni, nombre, apellido, telefono):
-    handleAgregar(dni, nombre, apellido, telefono)
-
-
-# Función para manejar el evento de volver al menú principal desde la ventana de agregar colaborador
-def handleVuelveSubmenuClick():
-    agregarColaboradorWindows.close()
-
 # Función para mostrar la ventana de agregar colaborador
-def showAddCollaboratorWindow():
+def agregarColaboradorVentana():
     global agregarColaboradorWindows
+    # Crear y configurar la ventana
     agregarColaboradorWindows = QMainWindow()
     agregarColaboradorWindows.setWindowTitle('Agregar Colaborador')
     agregarColaboradorWindows.setGeometry(200, 200, 400, 200)
 
+    # Estilo de la interfaz de usuario
     style_sheet = css.cogerEstiloColaboradores()
     agregarColaboradorWindows.setStyleSheet(style_sheet)
 
     layout = QVBoxLayout()
 
-    # Creamos etiquetas y campos de entrada para nombre, apellido y teléfono
+    # Etiquetas y campos de entrada para DNI, Nombre, Apellido y Teléfono
     dniLabel = QLabel("DNI: (00000000A)")
     layout.addWidget(dniLabel)
     dni = QLineEdit()
@@ -96,7 +92,8 @@ def showAddCollaboratorWindow():
     telefono = QLineEdit()
     layout.addWidget(telefono)
 
-    handleAgregarClick = lambda: handleAgregar(dni.text(), nombre.text(), apellido.text(), telefono.text())
+    # Manejador del evento clic para agregar colaborador
+    handleAgregarClick = lambda: handleAgregar(dni.text().upper(), nombre.text().upper(), apellido.text().upper(), telefono.text().upper())
 
     # Botón para agregar colaborador
     add_button = QPushButton("Agregar")
@@ -105,13 +102,14 @@ def showAddCollaboratorWindow():
 
     # Botón para volver al menú de colaboradores
     botonVolver = QPushButton("Volver")
-    botonVolver.clicked.connect(handleVuelveSubmenuClick)
+    botonVolver.clicked.connect(agregarColaboradorWindows.close)
     layout.addWidget(botonVolver)
 
     layout.setAlignment(Qt.AlignCenter)
 
+    # Configuración de la ventana y mostrarla
     widget = QWidget()
     widget.setLayout(layout)
-
     agregarColaboradorWindows.setCentralWidget(widget)
     agregarColaboradorWindows.show()
+
