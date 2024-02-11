@@ -65,20 +65,21 @@ def buscarAnimal():
     :param id_animal:
     :return:
     '''
-    nombreA = input("Introduce el nombre del animal: ")
-    buscarA = comprobarAnimal(nombreA)
-    if buscarA[0]:
-        keys = cnt.keys('A*')
-        if keys:
-            for key in keys:
-                valor = cnt.get(key)
+    if comprobarVacioA():
+        nombreA = input("Introduce el nombre del animal: ")
+        buscarA = comprobarAnimal(nombreA)
+        if buscarA[0]:
+            keys = cnt.keys('A*')
+            if keys:
+                for key in keys:
+                    valor = cnt.get(key)
 
-                if "Nombre: " + nombreA in valor:
-                    print(f"Clave: {key} {valor}")
+                    if "Nombre: " + nombreA in valor:
+                        print(f"Clave: {key} {valor}")
         else:
-            print("No hay animales guardados en la base de datos")
+            print(f"No se ha encontrado el nombre {nombreA} en la base de datos")
     else:
-        print(f"No se ha encontrado el nombre {nombreA} en la base de datos")
+        print("Todavia no hay animales registrados en la base de datos")
 
 def eliminarAnimal():
     '''
@@ -86,26 +87,27 @@ def eliminarAnimal():
     :param id_animal:
     :return:
     '''
-    nombreA = input("Introduce el nombre del animal que deseas eliminar: ")
-    buscarA = comprobarAnimal(nombreA)
-    if buscarA[0]:
-        keys = cnt.keys('A*')
-        if keys:
-            for key in keys:
-                valor = cnt.get(key)
+    if comprobarVacioA():
+        nombreA = input("Introduce el nombre del animal que deseas eliminar: ")
+        buscarA = comprobarAnimal(nombreA)
+        if buscarA[0]:
+            keys = cnt.keys('A*')
+            if keys:
+                for key in keys:
+                    valor = cnt.get(key)
 
-                if "Nombre: " + nombreA in valor:
-                    print(valor)
-                    conf = ut.confirmacion("Seguro que deseas eliminar este animal?", "Baja")
-                    if conf:
-                        cnt.delete(key)
-                        print("\t\tAnimal borrado")
-                    else:
-                        print("\t\tOperacion denegada")
+                    if "Nombre: " + nombreA in valor:
+                        print(valor)
+                        conf = ut.confirmacion("Seguro que deseas eliminar este animal?", "Baja")
+                        if conf:
+                            cnt.delete(key)
+                            print("\t\tAnimal borrado")
+                        else:
+                            print("\t\tOperacion denegada")
         else:
-            print("No hay animales guardados en la base de datos")
+            print(f"No se ha encontrado el nombre {nombreA} en la base de datos")
     else:
-        print(f"No se ha encontrado el nombre {nombreA} en la base de datos")
+        print("Todavia no hay animales registrados en la base de datos")
 
 def mostrarTodos():
     keys = cnt.keys('A*')
@@ -137,24 +139,27 @@ def comprobarAnimal(nombreA):
     return encontrado , keyE
 
 def modificarAnimal():
-    nombreA = input("Introduce el nombre del animal que deseas modificar: ")
-    buscarA = comprobarAnimal(nombreA)
-    if buscarA[0]:
-        print("Que deseas eliminarle al animal?")
-        print("1.Tipo")
-        print("2.Nombre")
-        print("3.Edad")
-        op = input("--> ").strip()
-        if op == "1":
-            modificarA(buscarA[1],"Tipo")
-        elif op == "2":
-            modificarA(buscarA[1],"Nombre")
-        elif op == "3":
-            modificarA(buscarA[1],"Edad")
+    if comprobarVacioA():
+        nombreA = input("Introduce el nombre del animal que deseas modificar: ")
+        buscarA = comprobarAnimal(nombreA)
+        if buscarA[0]:
+            print("Que deseas eliminarle al animal?")
+            print("1.Tipo")
+            print("2.Nombre")
+            print("3.Edad")
+            op = input("--> ").strip()
+            if op == "1":
+                modificarA(buscarA[1],"Tipo")
+            elif op == "2":
+                modificarA(buscarA[1],"Nombre")
+            elif op == "3":
+                modificarA(buscarA[1],"Edad")
+            else:
+                print("Opcion no valida")
         else:
-            print("Opcion no valida")
+            print(f"El nombre {nombreA} no lo tiene ningun animal")
     else:
-        print(f"El nombre {nombreA} no lo tiene ningun animal")
+        print("Todavia no hay animales registrados ")
 
 def modificarA(clave , campo ):
     valoresAnimal2 = ""
@@ -257,7 +262,6 @@ def asignarPadrino():
     else:
         print(f"El animal con el nombre {animalN} no existe en la BBDD")
 
-
 def desapadrinarAnimal():
     valoresAnimal2 = ""
     hecho = False
@@ -299,3 +303,45 @@ def comprobarPadrino(dniPadrino):
         #dni no valido
         mensaje = "Formato del dni no valido"
         return False, mensaje
+
+def mostrarAnimalesP():
+    '''
+    Metodo para mostrar todos los animales que tiene un colaborador apadrinados
+    Muestra el nombre y el id del animal
+    :return:
+    '''
+    nombres = ""
+    dniP = input("Introduce el dni del Padrino del que quieres conocer los animales: ")
+    existeP = comprobarPadrino("colaborador:" +dniP)
+    if existeP[0]:
+        keys = cnt.keys('A*')
+        encontrado = False
+        keyE = ""
+        if keys:
+            for key in keys:
+                valor = cnt.get(key)
+                #print(valor)
+                valorA = valor.split("\n")
+                if "DniPadrino: "+dniP in valor:
+                    ani = valorA[2]+ f", ID: {key}"
+                    nombres= nombres+ani+"\n"
+
+            if nombres:
+                print("--Animales apadrinados--")
+                print(nombres)
+            else:
+                print("Este Colaborador todavia no ha apadrinado ningun  animal")
+        else:
+            print("Todavia no hay animales registrados")
+    else:
+        print(existeP[1])
+
+def comprobarVacioA():
+    keys = cnt.keys('A*')
+    if keys:
+       return True
+    else:
+        return False
+
+
+

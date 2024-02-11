@@ -86,6 +86,8 @@ def imprimir_menu_colaboradores():
     print(
         "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 5. " + Fore.LIGHTBLUE_EX + "Mostrar todos los colaboradores" + Style.RESET_ALL + Fore.BLUE + "    ║║")
     print(
+        "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 6. " + Fore.LIGHTBLUE_EX + "Mostrar animales apadrinados" + Style.RESET_ALL + Fore.BLUE + "       ║║")
+    print(
         "\t\t" + Fore.BLUE + "║║\t" + Fore.LIGHTWHITE_EX + " 0. " + Fore.RED + "Volver al menú principal" + Style.RESET_ALL + Fore.BLUE + "           ║║")
     print("\t\t" + Fore.BLUE + "║╚═════════════════════════════════════════╝║")
     print("\t\t" + Fore.BLUE + "╚═══════════════════════════════════════════╝")
@@ -222,6 +224,13 @@ def ejecutar():
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
+                elif opcion_colaboradores == "6":
+
+                    colaboradores = c.mostrarTodos()
+                    if colaboradores:
+                        a.mostrarAnimalesP()
+                    else:
+                        print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
                 else:
                     print(Fore.RED + "Opción no válida." + Style.RESET_ALL)
 
