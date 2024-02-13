@@ -6,11 +6,11 @@ import EstiloCSS as css  # Importar un módulo EstiloCSS para el estilo de la in
 import ColaboradorGrafico as cg  # Importar módulo para manejar la lógica de colaboradores gráficos
 
 # Variables globales para almacenar elementos de la ventana
-buscarAnimalWindow = None
+buscarColaboradorWindow = None
 dni_label = None
 nombre_label = None
 apellido_label = None
-telefono_label = None
+edad_label = None
 fecha_inscripcion_label = None
 
 # Función para buscar un colaborador por su DNI
@@ -32,58 +32,57 @@ def buscarColaborador():
 # Función para mostrar la ventana de búsqueda de colaboradores
 def buscarColaboradorVentana():
     if ColaboradorConsola.mostrarTodos():
-        global buscarAnimalWindow
+        global buscarColaboradorWindow
         global dni_label, nombre_label, apellido_label, telefono_label, fecha_inscripcion_label
-        if buscarColaboradorWindow is not None:
-            buscarColaboradorWindow.show()
-            return
 
-        # Crear y configurar la ventana
-        buscarColaboradorWindow = QMainWindow()
-        buscarColaboradorWindow.setWindowTitle('Buscar Colaborador')
-        buscarColaboradorWindow.setGeometry(200, 200, 400, 400)
+        if buscarColaboradorWindow is None:
+            # Crear y configurar la ventana
+            buscarColaboradorWindow = QMainWindow()
+            buscarColaboradorWindow.setWindowTitle('Buscar Colaborador')
+            buscarColaboradorWindow.setGeometry(200, 200, 400, 400)
 
-        # Estilo de la interfaz de usuario
-        style_sheet = css.cogerEstiloColaboradores()
-        buscarColaboradorWindow.setStyleSheet(style_sheet)
+            # Estilo de la interfaz de usuario
+            style_sheet = css.cogerEstiloColaboradores()
+            buscarColaboradorWindow.setStyleSheet(style_sheet)
 
-        layout = QVBoxLayout()
+            layout = QVBoxLayout()
 
-        # Etiqueta y campo de entrada para introducir el DNI del colaborador
-        dniLabelBuscar = QLabel("Introduce el DNI del colaborador:")
-        layout.addWidget(dniLabelBuscar)
-        global dniLineEditBuscar
-        dniLineEditBuscar = QLineEdit()
-        layout.addWidget(dniLineEditBuscar)
+            # Etiqueta y campo de entrada para introducir el DNI del colaborador
+            dniLabelBuscar = QLabel("Introduce el DNI del colaborador:")
+            layout.addWidget(dniLabelBuscar)
+            global dniLineEditBuscar
+            dniLineEditBuscar = QLineEdit()
+            layout.addWidget(dniLineEditBuscar)
 
-        # Botón para buscar el colaborador
-        buscar_button = QPushButton("Buscar")
-        buscar_button.clicked.connect(buscarColaborador)
-        layout.addWidget(buscar_button)
+            # Botón para buscar el colaborador
+            buscar_button = QPushButton("Buscar")
+            buscar_button.clicked.connect(buscarColaborador)
+            layout.addWidget(buscar_button)
 
-        # Etiquetas para mostrar los detalles del colaborador encontrado
-        dni_label = QLabel("DNI:")
-        layout.addWidget(dni_label)
-        nombre_label = QLabel("Nombre:")
-        layout.addWidget(nombre_label)
-        apellido_label = QLabel("Apellidos:")
-        layout.addWidget(apellido_label)
-        telefono_label = QLabel("Teléfono:")
-        layout.addWidget(telefono_label)
-        fecha_inscripcion_label = QLabel("Fecha de Inscripción:")
-        layout.addWidget(fecha_inscripcion_label)
+            # Etiquetas para mostrar los detalles del colaborador encontrado
+            dni_label = QLabel("DNI:")
+            layout.addWidget(dni_label)
+            nombre_label = QLabel("Nombre:")
+            layout.addWidget(nombre_label)
+            apellido_label = QLabel("Apellidos:")
+            layout.addWidget(apellido_label)
+            telefono_label = QLabel("Teléfono:")
+            layout.addWidget(telefono_label)
+            fecha_inscripcion_label = QLabel("Fecha de Inscripción:")
+            layout.addWidget(fecha_inscripcion_label)
 
-        # Botón para volver
-        volver_button = QPushButton("Volver")
-        volver_button.clicked.connect(buscarColaboradorWindow.close)
-        layout.addWidget(volver_button)
+            # Botón para volver
+            volver_button = QPushButton("Volver")
+            volver_button.clicked.connect(buscarColaboradorWindow.close)
+            layout.addWidget(volver_button)
 
-        layout.setAlignment(Qt.AlignCenter)
+            layout.setAlignment(Qt.AlignCenter)
 
-        widget = QWidget()
-        widget.setLayout(layout)
+            widget = QWidget()
+            widget.setLayout(layout)
 
-        buscarColaboradorWindow.setCentralWidget(widget)
+            buscarColaboradorWindow.setCentralWidget(widget)
+
         buscarColaboradorWindow.show()
     else:
         # Si no hay colaboradores en la base de datos, mostrar un mensaje informativo

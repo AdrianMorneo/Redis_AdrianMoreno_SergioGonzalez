@@ -6,7 +6,7 @@ import EstiloCSS as css  # Importar un módulo EstiloCSS para el estilo de la in
 import ColaboradorGrafico as cg  # Importar módulo para manejar la lógica de colaboradores gráficos
 
 # Variable global para almacenar la ventana de eliminación de colaborador
-eliminarAnimalWindow = None
+eliminarColaboradorWindow = None
 
 # Función para eliminar un colaborador
 def eliminarColaborador():
@@ -14,20 +14,20 @@ def eliminarColaborador():
     colaborador = cg.buscar(dni)
     if colaborador:
         # Confirmar la eliminación del colaborador
-        confirmacion = QMessageBox.question(eliminarAnimalWindow, "Confirmar eliminación",
+        confirmacion = QMessageBox.question(eliminarColaboradorWindow, "Confirmar eliminación",
                                              "¿Estás seguro de que quieres eliminar al colaborador con DNI {}?".format(dni),
                                             QMessageBox.Yes | QMessageBox.No)
         if confirmacion == QMessageBox.Yes:
             # Si se confirma, eliminar al colaborador
             cg.eliminar(dni)
-            QMessageBox.information(eliminarAnimalWindow, "Colaborador eliminado",
+            QMessageBox.information(eliminarColaboradorWindow, "Colaborador eliminado",
                                     "El colaborador con DNI {} ha sido eliminado correctamente.".format(dni),
                                     QMessageBox.Ok)
 
             dniLineEditEliminar.clear()
     else:
         # Si el colaborador no es encontrado, mostrar un mensaje informativo
-        QMessageBox.information(eliminarAnimalWindow, "Colaborador no encontrado",
+        QMessageBox.information(eliminarColaboradorWindow, "Colaborador no encontrado",
                                 "El colaborador con el DNI especificado no fue encontrado.",
                                 QMessageBox.Ok)
     dniLineEditEliminar.clear()

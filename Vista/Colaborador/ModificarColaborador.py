@@ -9,8 +9,7 @@ import Utiles as ut  # Importar módulo de utilidades para validaciones
 import ColaboradorConsola as cc  # Importar módulo para interactuar con la base de datos de colaboradores (consola)
 
 # Variable global para almacenar la ventana de modificación
-modificarAnimalWindow = None
-
+modificarColaboradorWindow = None
 
 def confirmarModificacion(dniAnt, dni, nombre, apellido, telefono, fecha):
     # Función para confirmar la modificación de un colaborador
@@ -75,7 +74,6 @@ def confirmarModificacion(dniAnt, dni, nombre, apellido, telefono, fecha):
             print("Modificado")
             alerta.exec_()
 
-
 def buscarColaborador():
     # Función para buscar un colaborador por su DNI
     dni = dniLineEditBuscar.text().upper()
@@ -92,7 +90,6 @@ def buscarColaborador():
     else:
         # Si el colaborador no es encontrado, mostrar un mensaje informativo
         QMessageBox.information(None, "Colaborador no encontrado", "El colaborador con el DNI especificado no fue encontrado.", QMessageBox.Ok)
-
 
 def modificarColaboradorVentana():
     # Función para mostrar la ventana de modificación de colaboradores
