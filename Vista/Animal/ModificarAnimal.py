@@ -7,6 +7,8 @@ import EstiloCSS as css  # Importar módulo para el estilo de la interfaz de usu
 import AnimalGrafico as ag  # Importar módulo para interactuar con la base de datos de colaboradores (gráfico)
 import Utiles as ut  # Importar módulo de utilidades para validaciones
 import ColaboradorConsola as cc  # Importar módulo para interactuar con la base de datos de colaboradores (consola)
+import Animal as aml
+
 
 # Variable global para almacenar la ventana de modificación
 modificarAnimalWindow = None
@@ -14,10 +16,9 @@ modificarAnimalWindow = None
 
 def confirmarModificacion(nombreAnt, tipo, nombre, edad):
 
-
     # Procesar la respuesta del usuario
     if not ut.validarTipoA(tipo):
-        # Si el DNI no es válido, mostrar una alerta
+        # Si el tipo no es válido, mostrar una alerta
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Alerta")
@@ -27,14 +28,13 @@ def confirmarModificacion(nombreAnt, tipo, nombre, edad):
         ############### comprobar si el nombre esta en la bbdd
         ###############
 
-        '''    elif cc.comprobarDNIBBDD(nombre):
-                # Si el DNI ya existe en la base de datos, mostrar una alerta
-                alerta = QMessageBox()
-                alerta.setIcon(QMessageBox.Warning)
-                alerta.setWindowTitle("Alerta")
-                alerta.setText("Nombre ya introducido en la BBDD")
-                alerta.exec_()
-        '''
+    elif not aml.comprobarAnimal(nombre):
+        # Si el nombre ya existe en la base de datos, mostrar una alerta
+        alerta = QMessageBox()
+        alerta.setIcon(QMessageBox.Warning)
+        alerta.setWindowTitle("Alerta")
+        alerta.setText("Nombre ya introducido en la BBDD")
+        alerta.exec_()
     # Validación del nombre
     elif not ut.validarNombre(nombre):
         # Si el Nombre no es válido, mostrar una alerta
@@ -43,7 +43,7 @@ def confirmarModificacion(nombreAnt, tipo, nombre, edad):
         alerta.setWindowTitle("Alerta")
         alerta.setText("Nombre no válido, mínimo 2 dígitos")
         alerta.exec_()
-    # Validación del apellido
+    # Validación de la edad
     elif not ut.validarEdad(edad):
         # Si la Edad no es válida, mostrar una alerta
         alerta = QMessageBox()
@@ -51,14 +51,22 @@ def confirmarModificacion(nombreAnt, tipo, nombre, edad):
         alerta.setWindowTitle("Alerta")
         alerta.setText("Edad no válida, debe ser un número entre 0 y 100")
         alerta.exec_()
+    # Validación de la edad
+    elif not edad.isdigit():
+        # Si la Edad no es válida, mostrar una alerta
+        alerta = QMessageBox()
+        alerta.setIcon(QMessageBox.Warning)
+        alerta.setWindowTitle("Alerta")
+        alerta.setText("Edad no válida, debe ser un número")
+        alerta.exec_()
     else:
         # Si todos los datos son válidos, agregar el animal
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
-        alerta.setWindowTitle("animal Agregado")
-        alerta.setText("animal Agregado")
-        ag.nuevo(tipo, nombre, edad)
-        print("Agregado")
+        ag.eliminar(nombre)
+        ag.agregar(tipo, nombre, edad)
+        alerta.setWindowTitle("Modificado")
+        alerta.setText("Animal modificado")
         alerta.exec_()
         # Función para confirmar la modificación de un animal
         mensaje = QMessageBox()
@@ -125,7 +133,7 @@ def modificarAnimalVentana():
         layout.addWidget(dniLabel)
         global tipoComboBox
         tipoComboBox = QComboBox()
-        tipoComboBox.addItems(["Mamífero", "Ave", "Pez", "Reptil", "Anfibio"])
+        tipoComboBox.addItems(["MAMIFERO", "AVE", "PEZ", "REPTIL", "ANFIBIO"])
         layout.addWidget(tipoComboBox)
 
         nombreLabel = QLabel("Nombre: (mínimo 2 letras)")

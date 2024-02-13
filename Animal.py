@@ -17,7 +17,7 @@ def agregarAnimal():
 
     while not finEntradaAlta and fallos < 5:
         tipo = input("Introduce el tipo del animal (mamifero, ave, pez, reptil, anfibio): ")
-        if ut.validarTipoA(tipo):
+        if ut.validarTipoA(tipo.upper()):
            print("\t\tTipo valido\n")
            finEntradaAlta = True
         else:
@@ -27,7 +27,7 @@ def agregarAnimal():
     if fallos < 5:
         fallos = 0
         while not finEntradaAlta and fallos < 5:
-            nombre = input("Introduce el nombre del animal: ")
+            nombre = input("Introduce el nombre del animal: ").upper()
             if ut.validarNombre(nombre):
                 comp = comprobarAnimal(nombre)
                 if not comp[0]:
@@ -66,8 +66,8 @@ def buscarAnimal():
     :return:
     '''
     if comprobarVacioA():
-        nombreA = input("Introduce el nombre del animal: ")
-        buscarA = comprobarAnimal(nombreA)
+        nombreA = input("Introduce el nombre del animal: ").upper()
+        buscarA = comprobarAnimal(nombreA).upper()
         if buscarA[0]:
             keys = cnt.keys('A*')
             if keys:
@@ -88,7 +88,7 @@ def eliminarAnimal():
     :return:
     '''
     if comprobarVacioA():
-        nombreA = input("Introduce el nombre del animal que deseas eliminar: ")
+        nombreA = input("Introduce el nombre del animal que deseas eliminar: ").upper()
         buscarA = comprobarAnimal(nombreA)
         if buscarA[0]:
             keys = cnt.keys('A*')
@@ -140,7 +140,7 @@ def comprobarAnimal(nombreA):
 
 def modificarAnimal():
     if comprobarVacioA():
-        nombreA = input("Introduce el nombre del animal que deseas modificar: ")
+        nombreA = input("Introduce el nombre del animal que deseas modificar: ").upper()
         buscarA = comprobarAnimal(nombreA)
         if buscarA[0]:
             print("Que deseas eliminarle al animal?")
@@ -169,9 +169,9 @@ def modificarA(clave , campo ):
     hecho = False
     while not finEntradaMod and fallos < 5:
 
-        nuevoValor = input(f"Introduce el nuevo valor para cambiar {campo} del animal: ")
+        nuevoValor = input(f"Introduce el nuevo valor para cambiar {campo} del animal: ").upper()
         if campo =="Tipo":
-            if ut.validarNombre(nuevoValor):
+            if ut.validarTipoA(nuevoValor):
                 print("\t\tTipo valido\n")
                 finEntradaMod = True
             else:

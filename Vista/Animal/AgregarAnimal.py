@@ -4,6 +4,7 @@ import EstiloCSS as css  # Importar un módulo EstiloCSS para el estilo de la in
 import AnimalGrafico as ag  # Importar módulo para manejar la lógica de colaboradores
 import Utiles as ut  # Importar módulo con funciones útiles
 import ColaboradorConsola as cc  # Importar módulo para manejar la lógica de colaboradores en la consola
+import Animal as aml
 
 # Función para manejar el evento de agregar un colaborador
 def handleAgregar(tipo, nombre, edad):
@@ -20,14 +21,14 @@ def handleAgregar(tipo, nombre, edad):
     ###############
 
 
-        '''    elif cc.comprobarDNIBBDD(nombre):
+    elif not aml.comprobarAnimal(nombre):
                 # Si el DNI ya existe en la base de datos, mostrar una alerta
-                alerta = QMessageBox()
-                alerta.setIcon(QMessageBox.Warning)
-                alerta.setWindowTitle("Alerta")
-                alerta.setText("Nombre ya introducido en la BBDD")
-                alerta.exec_()
-        '''
+        alerta = QMessageBox()
+        alerta.setIcon(QMessageBox.Warning)
+        alerta.setWindowTitle("Alerta")
+        alerta.setText("Nombre ya introducido en la BBDD")
+        alerta.exec_()
+
     # Validación del nombre
     elif not ut.validarNombre(nombre):
         # Si el Nombre no es válido, mostrar una alerta
@@ -50,7 +51,7 @@ def handleAgregar(tipo, nombre, edad):
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Colaborador Agregado")
         alerta.setText("Colaborador Agregado")
-        ag.nuevo(tipo, nombre, edad)
+        ag.agregar(tipo, nombre, edad)
         print("Agregado")
         alerta.exec_()
 
@@ -72,7 +73,7 @@ def agregarAnimalVentana():
     tipoLabel = QLabel("Tipo: ")
     layout.addWidget(tipoLabel)
     tipoComboBox = QComboBox()
-    tipoComboBox.addItems(["Mamífero", "Ave", "Pez", "Reptil", "Anfibio"])
+    tipoComboBox.addItems(["MAMIFERO", "AVE", "PEZ", "REPTIL", "ANFIBIO"])
     layout.addWidget(tipoComboBox)
 
     nombreLabel = QLabel("Nombre: (mínimo 2 letras)")

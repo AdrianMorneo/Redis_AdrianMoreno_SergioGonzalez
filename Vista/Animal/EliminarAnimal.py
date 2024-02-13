@@ -4,37 +4,39 @@ from PySide2.QtCore import Qt
 import ColaboradorConsola  # Importar módulo para manejar la lógica de colaboradores en la consola
 import EstiloCSS as css  # Importar un módulo EstiloCSS para el estilo de la interfaz de usuario
 import ColaboradorGrafico as cg  # Importar módulo para manejar la lógica de colaboradores gráficos
+import AnimalGrafico as ag  # Importar módulo para manejar la lógica de colaboradores
+
 
 # Variable global para almacenar la ventana de eliminación de colaborador
 eliminarAnimalWindow = None
 
 # Función para eliminar un colaborador
 def eliminarAnimal():
-    dni = nombreLineEditEliminar.text().upper()
-    colaborador = cg.buscar(dni)
-    if colaborador:
+    nombre = nombreLineEditEliminar.text().upper()
+    animal = ag.comprobarAnimal(nombre)
+    if animal[0]:
         # Confirmar la eliminación del colaborador
         confirmacion = QMessageBox.question(eliminarAnimalWindow, "Confirmar eliminación",
-                                             "¿Estás seguro de que quieres eliminar al colaborador con DNI {}?".format(dni),
+                                             f"¿Estás seguro de que quieres eliminar al animal {nombre}?",
                                             QMessageBox.Yes | QMessageBox.No)
         if confirmacion == QMessageBox.Yes:
             # Si se confirma, eliminar al colaborador
-            cg.eliminar(dni)
+            ag.eliminar(nombre)
             QMessageBox.information(eliminarAnimalWindow, "Colaborador eliminado",
-                                    "El colaborador con DNI {} ha sido eliminado correctamente.".format(dni),
+                                    f"El animal {nombre} ha sido eliminado correctamente.",
                                     QMessageBox.Ok)
 
             nombreLineEditEliminar.clear()
     else:
         # Si el colaborador no es encontrado, mostrar un mensaje informativo
-        QMessageBox.information(eliminarAnimalWindow, "Colaborador no encontrado",
-                                "El colaborador con el DNI especificado no fue encontrado.",
+        QMessageBox.information(eliminarAnimalWindow, "Animal no encontrado",
+                                f"El Animal {nombre} especificado no fue encontrado.",
                                 QMessageBox.Ok)
     nombreLineEditEliminar.clear()
 
 # Función para mostrar la ventana de eliminación de colaborador
 def eliminarAnimalVentana():
-    #if ColaboradorConsola.mostrarTodos():
+    if ag.comprobarVacioA():
         global eliminarAnimalWindow
         if eliminarAnimalWindow is not None:
             eliminarAnimalWindow.show()
@@ -75,12 +77,11 @@ def eliminarAnimalVentana():
 
         eliminarAnimalWindow.setCentralWidget(widget)
         eliminarAnimalWindow.show()
-"""
+
     else:
-        # Si no hay colaboradores en la base de datos, mostrar un mensaje informativo
+        # Si no hay animales en la base de datos, mostrar un mensaje informativo
         mensaje = QMessageBox()
         mensaje.setWindowTitle("Aviso")
-        mensaje.setText("No hay Animal en la BBDD.")
+        mensaje.setText("No hay Animales en la BBDD.")
         mensaje.setIcon(QMessageBox.Information)
         mensaje.exec_()
-"""
