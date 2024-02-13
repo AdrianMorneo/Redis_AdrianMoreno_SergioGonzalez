@@ -9,7 +9,7 @@ import Utiles as ut  # Importar módulo de utilidades para validaciones
 import ColaboradorConsola as cc  # Importar módulo para interactuar con la base de datos de colaboradores (consola)
 
 # Variable global para almacenar la ventana de modificación
-modificarColaboradorWindow = None
+modificarAnimalWindow = None
 
 
 def confirmarModificacion(dniAnt, dni, nombre, apellido, telefono, fecha):
@@ -97,7 +97,7 @@ def buscarColaborador():
 def modificarColaboradorVentana():
     # Función para mostrar la ventana de modificación de colaboradores
     if ColaboradorConsola.mostrarTodos():
-        global modificarColaboradorWindow
+        global modificarAnimalWindow
         # Si la ventana ya está creada, simplemente la mostramos
         if modificarColaboradorWindow is not None:
             modificarColaboradorWindow.show()

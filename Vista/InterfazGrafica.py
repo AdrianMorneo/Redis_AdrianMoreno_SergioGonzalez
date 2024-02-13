@@ -2,7 +2,7 @@ import sys
 from PySide2.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QMessageBox
 from PySide2.QtCore import QTimer, Qt
 import EstiloCSS as css
-from .Animales import InterfazGraficaAnimales as iga
+from .Animal import InterfazGraficaAnimales as iga
 from .Colaborador import InterfazGraficaColaboradores as igc
 import Conexion as cx
 

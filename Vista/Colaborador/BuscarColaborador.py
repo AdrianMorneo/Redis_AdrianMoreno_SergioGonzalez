@@ -6,11 +6,11 @@ import EstiloCSS as css  # Importar un módulo EstiloCSS para el estilo de la in
 import ColaboradorGrafico as cg  # Importar módulo para manejar la lógica de colaboradores gráficos
 
 # Variables globales para almacenar elementos de la ventana
-buscarColaboradorWindow = None
+buscarAnimalWindow = None
 dni_label = None
 nombre_label = None
 apellido_label = None
-telefono_label = None
+edad_label = None
 fecha_inscripcion_label = None
 
 # Función para buscar un colaborador por su DNI
@@ -22,7 +22,7 @@ def buscarColaborador():
         dni_label.setText("DNI: " + colaborador.get('dni', ''))
         nombre_label.setText("Nombre: " + colaborador.get('nombre', ''))
         apellido_label.setText("Apellidos: " + colaborador.get('apellido', ''))
-        telefono_label.setText("Teléfono: " + colaborador.get('telefono', ''))
+        edad_label.setText("Teléfono: " + colaborador.get('telefono', ''))
         fecha_inscripcion_label.setText("Fecha de Inscripción: " + colaborador.get('fechaInscripcion', ''))
         dniLineEditBuscar.clear()
     else:
@@ -32,8 +32,8 @@ def buscarColaborador():
 # Función para mostrar la ventana de búsqueda de colaboradores
 def buscarColaboradorVentana():
     if ColaboradorConsola.mostrarTodos():
-        global buscarColaboradorWindow
-        global dni_label, nombre_label, apellido_label, telefono_label, fecha_inscripcion_label
+        global buscarAnimalWindow
+        global dni_label, nombre_label, apellido_label, edad_label, fecha_inscripcion_label
         if buscarColaboradorWindow is not None:
             buscarColaboradorWindow.show()
             return

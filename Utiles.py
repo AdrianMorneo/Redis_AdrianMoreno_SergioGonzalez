@@ -1,7 +1,7 @@
 from datetime import datetime
 
 def validarTipoA(tipo):
-    tipos_animales = ["mamifero", "ave", "pez", "reptil", "anfibio"]
+    tipos_animales = ["MAMÍFERO", "AVE", "PEZ", "REPTIL", "ANFIBIO"]
 
     if tipo in tipos_animales:
         return True
@@ -60,6 +60,15 @@ def fallo(fallos, mensaje):
     print(f"\t\t{mensaje} \n\t\tIntentos: {fallos + 1} de 5")
     return fallos + 1
 
+def validarEdad(edad):
+    try:
+        edad = int(edad)
+        if 0 <= edad < 100:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
 def confirmacion(mensaje, tipo):
     """
     Metodo que permite la gestion de confirmaciones

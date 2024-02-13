@@ -9,8 +9,8 @@ import ColaboradorGrafico as cg  # Importar módulo para manejar la lógica de c
 eliminarAnimalWindow = None
 
 # Función para eliminar un colaborador
-def eliminarColaborador():
-    dni = dniLineEditEliminar.text().upper()
+def eliminarAnimal():
+    dni = nombreLineEditEliminar.text().upper()
     colaborador = cg.buscar(dni)
     if colaborador:
         # Confirmar la eliminación del colaborador
@@ -24,48 +24,48 @@ def eliminarColaborador():
                                     "El colaborador con DNI {} ha sido eliminado correctamente.".format(dni),
                                     QMessageBox.Ok)
 
-            dniLineEditEliminar.clear()
+            nombreLineEditEliminar.clear()
     else:
         # Si el colaborador no es encontrado, mostrar un mensaje informativo
         QMessageBox.information(eliminarAnimalWindow, "Colaborador no encontrado",
                                 "El colaborador con el DNI especificado no fue encontrado.",
                                 QMessageBox.Ok)
-    dniLineEditEliminar.clear()
+    nombreLineEditEliminar.clear()
 
 # Función para mostrar la ventana de eliminación de colaborador
-def eliminarColaboradorVentana():
-    if ColaboradorConsola.mostrarTodos():
+def eliminarAnimalVentana():
+    #if ColaboradorConsola.mostrarTodos():
         global eliminarAnimalWindow
-        if eliminarColaboradorWindow is not None:
-            eliminarColaboradorWindow.show()
+        if eliminarAnimalWindow is not None:
+            eliminarAnimalWindow.show()
             return
 
         # Crear y configurar la ventana
-        eliminarColaboradorWindow = QMainWindow()
-        eliminarColaboradorWindow.setWindowTitle('Eliminar Colaborador')
-        eliminarColaboradorWindow.setGeometry(200, 200, 400, 200)
+        eliminarAnimalWindow = QMainWindow()
+        eliminarAnimalWindow.setWindowTitle('Eliminar Animal')
+        eliminarAnimalWindow.setGeometry(200, 200, 400, 200)
 
         # Estilo de la interfaz de usuario
-        style_sheet = css.cogerEstiloColaboradores()
-        eliminarColaboradorWindow.setStyleSheet(style_sheet)
+        style_sheet = css.cogerEstiloAnimales()
+        eliminarAnimalWindow.setStyleSheet(style_sheet)
 
         layout = QVBoxLayout()
 
         # Etiqueta y campo de entrada para introducir el DNI del colaborador a eliminar
-        dniLabelEliminar = QLabel("Introduce el DNI del colaborador a eliminar:")
-        layout.addWidget(dniLabelEliminar)
-        global dniLineEditEliminar
-        dniLineEditEliminar = QLineEdit()
-        layout.addWidget(dniLineEditEliminar)
+        nombreLabelEliminar = QLabel("Introduce el Nombre del Animal a eliminar:")
+        layout.addWidget(nombreLabelEliminar)
+        global nombreLineEditEliminar
+        nombreLineEditEliminar = QLineEdit()
+        layout.addWidget(nombreLineEditEliminar)
 
         # Botón para eliminar el colaborador
         eliminar_button = QPushButton("Eliminar")
-        eliminar_button.clicked.connect(eliminarColaborador)
+        eliminar_button.clicked.connect(eliminarAnimal)
         layout.addWidget(eliminar_button)
 
         # Botón para volver
         volver_button = QPushButton("Volver")
-        volver_button.clicked.connect(eliminarColaboradorWindow.close)
+        volver_button.clicked.connect(eliminarAnimalWindow.close)
         layout.addWidget(volver_button)
 
         layout.setAlignment(Qt.AlignCenter)
@@ -73,12 +73,14 @@ def eliminarColaboradorVentana():
         widget = QWidget()
         widget.setLayout(layout)
 
-        eliminarColaboradorWindow.setCentralWidget(widget)
-        eliminarColaboradorWindow.show()
+        eliminarAnimalWindow.setCentralWidget(widget)
+        eliminarAnimalWindow.show()
+"""
     else:
         # Si no hay colaboradores en la base de datos, mostrar un mensaje informativo
         mensaje = QMessageBox()
         mensaje.setWindowTitle("Aviso")
-        mensaje.setText("No hay colaboradores en la BBDD.")
+        mensaje.setText("No hay Animal en la BBDD.")
         mensaje.setIcon(QMessageBox.Information)
         mensaje.exec_()
+"""

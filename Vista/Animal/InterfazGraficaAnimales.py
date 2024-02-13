@@ -6,26 +6,36 @@
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget
 import EstiloCSS as css
+from . import AgregarAnimal as aa  # Importar módulo para agregar colaborador
+from . import MostrarTodosAnimales as mt  # Importar módulo para mostrar todos los colaboradores
+from . import ModificarAnimal as ma  # Importar módulo para modificar colaborador
+from . import BuscarAnimal as ba  # Importar módulo para buscar colaborador
+from . import EliminarAnimal as ea  # Importar módulo para eliminar colaborador
 
 
 def handleAddAnimalClick():
     print("Agregar un animal")
+    aa.agregarAnimalVentana()
 
 
 def handleDeleteAnimalClick():
     print("Eliminar un animal")
+    ea.eliminarAnimalVentana()
 
 
 def handleModifyAnimalClick():
     print("Modificar un animal")
+    ma.modificarAnimalVentana()
 
 
 def handleSearchAnimalClick():
     print("Buscar un animal")
+    ba.buscarAnimalWindow()
 
 
 def handleShowAllAnimalsClick():
     print("Mostrar todos los animales")
+    mt.mostrarAnimalesWindows()
 
 def handleBackToMainMenuClickA():
     submenu_window_animales.close()
