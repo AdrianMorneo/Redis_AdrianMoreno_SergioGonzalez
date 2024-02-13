@@ -97,7 +97,7 @@ def buscarColaborador():
 def modificarColaboradorVentana():
     # Función para mostrar la ventana de modificación de colaboradores
     if ColaboradorConsola.mostrarTodos():
-        global modificarAnimalWindow
+        global modificarColaboradorWindow
         # Si la ventana ya está creada, simplemente la mostramos
         if modificarColaboradorWindow is not None:
             modificarColaboradorWindow.show()

@@ -35,7 +35,7 @@ def eliminarColaborador():
 # Función para mostrar la ventana de eliminación de colaborador
 def eliminarColaboradorVentana():
     if ColaboradorConsola.mostrarTodos():
-        global eliminarAnimalWindow
+        global eliminarColaboradorWindow
         if eliminarColaboradorWindow is not None:
             eliminarColaboradorWindow.show()
             return

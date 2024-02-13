@@ -43,6 +43,7 @@ def mostrarAnimalesWindows():
         animales_info = cc.mostrarTodos()
 
         # Agregar los datos de los colaboradores a la tabla
+        '''
         if animales_info:
             table.setRowCount(len(animales_info))
             for row, animal in enumerate(animales_info):
@@ -57,7 +58,8 @@ def mostrarAnimalesWindows():
             no_data_item = QTableWidgetItem("No hay animal registrado.")
             table.setItem(0, 0, no_data_item)
             table.setColumnSpan(0, 0, len(column_names))  # Fusionar todas las columnas
-
+        
+        '''
         # Ajustar el tamaño de las columnas para que se ajusten al contenido
         table.resizeColumnsToContents()
 
@@ -75,6 +77,7 @@ def mostrarAnimalesWindows():
 
         # Mostrar la ventana de todos los animal
         mostrarAnimales.show()
+
 """
     else:
         # Si no hay animal en la base de datos, mostrar un mensaje de aviso

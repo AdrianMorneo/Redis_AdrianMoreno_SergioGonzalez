@@ -30,7 +30,7 @@ def handleModifyAnimalClick():
 
 def handleSearchAnimalClick():
     print("Buscar un animal")
-    ba.buscarAnimalWindow()
+    ba.buscarAnimalVentana()
 
 
 def handleShowAllAnimalsClick():

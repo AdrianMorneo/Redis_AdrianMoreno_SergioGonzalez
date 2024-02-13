@@ -10,7 +10,7 @@ buscarAnimalWindow = None
 dni_label = None
 nombre_label = None
 apellido_label = None
-edad_label = None
+telefono_label = None
 fecha_inscripcion_label = None
 
 # Función para buscar un colaborador por su DNI
@@ -22,7 +22,7 @@ def buscarColaborador():
         dni_label.setText("DNI: " + colaborador.get('dni', ''))
         nombre_label.setText("Nombre: " + colaborador.get('nombre', ''))
         apellido_label.setText("Apellidos: " + colaborador.get('apellido', ''))
-        edad_label.setText("Teléfono: " + colaborador.get('telefono', ''))
+        telefono_label.setText("Teléfono: " + colaborador.get('telefono', ''))
         fecha_inscripcion_label.setText("Fecha de Inscripción: " + colaborador.get('fechaInscripcion', ''))
         dniLineEditBuscar.clear()
     else:
@@ -33,7 +33,7 @@ def buscarColaborador():
 def buscarColaboradorVentana():
     if ColaboradorConsola.mostrarTodos():
         global buscarAnimalWindow
-        global dni_label, nombre_label, apellido_label, edad_label, fecha_inscripcion_label
+        global dni_label, nombre_label, apellido_label, telefono_label, fecha_inscripcion_label
         if buscarColaboradorWindow is not None:
             buscarColaboradorWindow.show()
             return
@@ -92,3 +92,4 @@ def buscarColaboradorVentana():
         mensaje.setText("No hay colaboradores en la BBDD.")
         mensaje.setIcon(QMessageBox.Information)
         mensaje.exec_()
+
