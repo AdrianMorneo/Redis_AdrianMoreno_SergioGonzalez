@@ -6,7 +6,7 @@ cnt = conect.conectar()
 
 def agregar(tipo, nombre, edad):
     '''
-    Metodo para dar de alta un animal nuevo en la base de datos redis interfaz grafica
+    Metodo para dar de alta un animal nuevo en la base de datos redis para la interfaz grafica
     :return:
     '''
     id = cnt.incr('idAnimal')
