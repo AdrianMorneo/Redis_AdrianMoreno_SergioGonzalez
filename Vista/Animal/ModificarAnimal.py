@@ -18,7 +18,9 @@ nombreLineEdit = None
 tipoComboBox = None
 edadLineEdit = None
 
-def confirmarModificacion(tipo, nombre, edad):
+
+def confirmarModificacion(nombreAnt, tipo, nombre, edad):
+    keyAnt = ag.comprobarAnimal(nombreAnt)
 
     # Procesar la respuesta del usuario
     if not ut.validarTipoA(tipo):
@@ -67,8 +69,8 @@ def confirmarModificacion(tipo, nombre, edad):
         # Si todos los datos son válidos, agregar el animal
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
-        ag.eliminar(nombre)
-        ag.agregar(tipo, nombre, edad)
+        ag.eliminar(nombreAnt)
+        ag.agregarNid(keyAnt[1], tipo, nombre, edad)
         alerta.setWindowTitle("Modificado")
         alerta.setText("Animal modificado")
         alerta.exec_()
@@ -161,7 +163,9 @@ def modificarAnimalVentana():
         modificar_button = QPushButton("Modificar")
         # Conectar el botón de modificar con la función de confirmar modificación
         modificar_button.clicked.connect(
-            lambda: confirmarModificacion(tipoComboBox.currentText().upper(),
+            lambda: confirmarModificacion(
+                                          dniLineEditBuscar.text().upper(),
+                                          tipoComboBox.currentText().upper(),
                                           nombreLineEdit.text().upper(),
                                           edadLineEdit.text().upper()))
         layout.addWidget(modificar_button)

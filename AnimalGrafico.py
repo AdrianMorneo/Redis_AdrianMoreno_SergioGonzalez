@@ -14,6 +14,15 @@ def agregar(tipo, nombre, edad):
     informacionA = f"\nTipo: {tipo}\nNombre: {nombre}\nEdad: {edad}\nDniPadrino: {dniPadrino}\n"
     cnt.set("A"+str(id), informacionA)
 
+def agregarNid(id ,tipo, nombre, edad):
+    '''
+    Metodo para dar de alta un animal nuevo en la base de datos redis
+    :return:
+    '''
+    dniPadrino = "Sin Padrino"
+    informacionA = f"\nTipo: {tipo}\nNombre: {nombre}\nEdad: {edad}\nDniPadrino: {dniPadrino}\n"
+    cnt.set(str(id), informacionA)
+
 def buscarAnimal():
     '''
     Metodo para buscar un animal a traves del nombre del animal
