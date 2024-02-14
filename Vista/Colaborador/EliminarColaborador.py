@@ -10,6 +10,10 @@ eliminarColaboradorWindow = None
 
 # Función para eliminar un colaborador
 def eliminarColaborador():
+    '''
+    Metodo que elimina el colaborador, pide DNI lo busca y lo borra
+    :return:
+    '''
     dni = dniLineEditEliminar.text().upper()
     colaborador = cg.buscar(dni)
     if colaborador:
@@ -34,6 +38,10 @@ def eliminarColaborador():
 
 # Función para mostrar la ventana de eliminación de colaborador
 def eliminarColaboradorVentana():
+    '''
+    Metodo que gestiona la ventan de eliminar colaborador
+    :return:
+    '''
     if ColaboradorConsola.mostrarTodos():
         global eliminarColaboradorWindow
         if eliminarColaboradorWindow is not None:

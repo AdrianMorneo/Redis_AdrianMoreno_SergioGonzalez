@@ -60,7 +60,12 @@ def handle_delete_button_click():
 
 # Función que muestra los botones del menú en la ventana principal
 def mostrarBotonesMenu(main_window):
-    # Crear el widget central y configurarlo en la ventana principal
+    '''
+    Control y configuración de la ventana principal
+    :param main_window:
+    :return:
+    '''
+
     central_widget = QWidget(main_window)
     main_window.setCentralWidget(central_widget)
 

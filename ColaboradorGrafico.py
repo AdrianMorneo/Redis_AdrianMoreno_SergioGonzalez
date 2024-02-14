@@ -11,6 +11,15 @@ con = cx.conectar()
 
 # Función para agregar un nuevo colaborador a la base de datos
 def nuevo(dni, nombre, apellido, telefono):
+
+    '''
+    Crea un nuevo colaborador
+    :param dni: recibe dni
+    :param nombre: recibe nombre
+    :param apellido: recibe apellido
+    :param telefono: recibe telefono
+    :return: Boolean, True si lo hace
+    '''
     # Obtener la fecha actual en formato "dd-mm-aaaa"
     fechaInscripcion = datetime.now().strftime("%d-%m-%Y")
 
@@ -38,6 +47,11 @@ def nuevo(dni, nombre, apellido, telefono):
 
 # Función para buscar un colaborador en la base de datos mediante su DNI
 def buscar(dni):
+    '''
+    Busca un colaborador
+    :param dni: recibe dni
+    :return: Colaborador o None
+    '''
     # Obtener la lista de todos los colaboradores almacenados en la base de datos
     colaboradores = cc.mostrarTodos()
 
@@ -68,6 +82,15 @@ def buscar(dni):
 
 # Función para modificar los datos de un colaborador en la base de datos
 def modificar(dni, nombre, apellido, telefono, fechaInscripcion):
+    '''
+    Modifica Colaborador, recibe parametros, crea un colaborador nuevo y borra el que sustituye
+    :param dni: recibe dni
+    :param nombre: Recibe nombre
+    :param apellido: Recibe apellido
+    :param telefono: Recibe Telefono
+    :param fechaInscripcion:
+    :return:
+    '''
     print(fechaInscripcion + " Estoy en modificar")
 
     # Crear un diccionario con los datos actualizados del colaborador
@@ -94,6 +117,11 @@ def modificar(dni, nombre, apellido, telefono, fechaInscripcion):
 
 # Función para eliminar un colaborador de la base de datos
 def eliminar(dni):
+    '''
+    elimina colaborador con el dni recibido
+    :param dni:recibe dni
+    :return: boolean True si lo ha eliminado, False si no
+    '''
     # Buscar el colaborador en la base de datos mediante su DNI
     colaborador = buscar(dni)
 

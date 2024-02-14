@@ -12,7 +12,16 @@ import ColaboradorConsola as cc  # Importar módulo para interactuar con la base
 modificarColaboradorWindow = None
 
 def confirmarModificacion(dniAnt, dni, nombre, apellido, telefono, fecha):
-    # Función para confirmar la modificación de un colaborador
+    '''
+    # Función para confirmar la modificación de un colaborador y control de parametros
+    :param dniAnt: Recibe el dni antiguo por si se cambio para modificarlo
+    :param dni: Recibe el nuevo DNI
+    :param nombre: recibe el nombre
+    :param apellido: recibe el apellido
+    :param telefono: Recibe el telefono
+    :param fecha: Recibe la fecha
+    :return: Nada
+    '''
     mensaje = QMessageBox()
     mensaje.setWindowTitle("Confirmar Modificación")
     mensaje.setText("¿Seguro que quieres modificar?")
@@ -75,7 +84,11 @@ def confirmarModificacion(dniAnt, dni, nombre, apellido, telefono, fecha):
             alerta.exec_()
 
 def buscarColaborador():
+    '''
     # Función para buscar un colaborador por su DNI
+    :return:
+    '''
+
     dni = dniLineEditBuscar.text().upper()
     colaborador = cg.buscar(dni)  # Buscar el colaborador en la base de datos
     if colaborador:
@@ -92,7 +105,11 @@ def buscarColaborador():
         QMessageBox.information(None, "Colaborador no encontrado", "El colaborador con el DNI especificado no fue encontrado.", QMessageBox.Ok)
 
 def modificarColaboradorVentana():
-    # Función para mostrar la ventana de modificación de colaboradores
+    '''
+    Función para mostrar la ventana de modificación de colaboradores
+    :return:
+    '''
+
     if ColaboradorConsola.mostrarTodos():
         global modificarColaboradorWindow
         # Si la ventana ya está creada, simplemente la mostramos
