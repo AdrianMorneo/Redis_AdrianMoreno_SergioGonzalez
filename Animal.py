@@ -17,8 +17,8 @@ def agregarAnimal():
         fallos = 0
     #validacion del tipo
     while not finEntradaAlta and fallos < 5:
-        tipo = input("Introduce el tipo del animal (mamifero, ave, pez, reptil, anfibio): ")
-        if ut.validarTipoA(tipo.upper()):
+        tipo = input("Introduce el tipo del animal (mamifero, ave, pez, reptil, anfibio): ").upper()
+        if ut.validarTipoA(tipo):
            print("\t\tTipo valido\n")
            finEntradaAlta = True
         else:
@@ -71,7 +71,7 @@ def buscarAnimal():
     '''
     if comprobarVacioA():#Comprueba si hay animales guardados en la base de datos
         nombreA = input("Introduce el nombre del animal: ").upper()
-        buscarA = comprobarAnimal(nombreA).upper()#comprueba si existe el animal en la bbd con el nombre introducido
+        buscarA = comprobarAnimal(nombreA)#comprueba si existe el animal en la bbd con el nombre introducido
         if buscarA[0]:
             keys = cnt.keys('A*')#guarda todas la keys que comiencen por una A
             if keys:
@@ -242,23 +242,41 @@ def asignarPadrino():
     Metodo para asignar el dni de un colaborador/padrino a un animal
     :return:
     '''
-    valoresAnimal2 = ""
-    animalN = input("Introduce el nombre del animal al que deseas asignar un padrino: ")
-    anim = comprobarAnimal(animalN)#comprueba que el animal existe en la base de datos redis
-    #comprueba si el animal seleccionado ya tiene un padrino asignado y avisa
-    if anim[0]:
-        valoresAnimal = cnt.get(anim[1]).split('\n')
-        dniP = input(f"Introduce el Dni del padrino que deseas asignarle a {animalN}: ")
-        existeP = comprobarPadrino("colaborador:"+dniP)
+    if comprobarVacioA():
+        valoresAnimal2 = ""
+        animalN = input("Introduce el nombre del animal al que deseas asignar un padrino: ").upper()
+        anim = comprobarAnimal(animalN)#comprueba que el animal existe en la base de datos redis
+        #comprueba si el animal seleccionado ya tiene un padrino asignado y avisa
+        if anim[0]:
+            valoresAnimal = cnt.get(anim[1]).split('\n')
+            dniP = input(f"Introduce el Dni del padrino que deseas asignarle a {animalN}: ").upper()
+            existeP = comprobarPadrino("colaborador:"+dniP)
 
-        if not "DniPadrino: Sin Padrino" in valoresAnimal[4]:#si el animal ya contiene un padrino
+            if not "DniPadrino: Sin Padrino" in valoresAnimal[4]:#si el animal ya contiene un padrino
 
-            if f"DniPadrino: {dniP}" in valoresAnimal[4].strip():  # si el padrino que se le desea asignar ya lo conteine
-                print(f"{animalN} ya tiene asignado este Padrino")
-            else:
+                if f"DniPadrino: {dniP}" in valoresAnimal[4].strip():  # si el padrino que se le desea asignar ya lo conteine
+                    print(f"{animalN} ya tiene asignado este Padrino")
+                else:
+                    if existeP[0]:
+                        print(f"Este animal ya contiene un padrino, se sustituira")
+                        conf = ut.confirmacion(f"Seguro que deseas sustituir?", "Asignacion de Padrino")
+                        if conf:
+                            valoresAnimal[4] = f"DniPadrino: {dniP}"
+                            hecho = True
+                            if hecho:
+                                for valor in valoresAnimal:
+                                    valoresAnimal2 = "\n".join(valoresAnimal)
+                            else:
+                                print("Error al asignar padrino")
+                            cnt.set(anim[1], valoresAnimal2)
+                        else:
+                            print("Operacion Denegada")
+                    else:
+                        print(existeP[1])#Mensaje indicando el error que se provoco al comprobar padrino
+
+            else:#si el animal no contiene ningun padrino
                 if existeP[0]:
-                    print(f"Este animal ya contiene un padrino, se sustituira")
-                    conf = ut.confirmacion(f"Seguro que deseas sustituir?", "Asignacion de Padrino")
+                    conf = ut.confirmacion(f"Seguro que deseas asignar el Padrino?", "Asignacion de Padrino")
                     if conf:
                         valoresAnimal[4] = f"DniPadrino: {dniP}"
                         hecho = True
@@ -272,53 +290,40 @@ def asignarPadrino():
                         print("Operacion Denegada")
                 else:
                     print(existeP[1])#Mensaje indicando el error que se provoco al comprobar padrino
-
-        else:#si el animal no contiene ningun padrino
-            if existeP[0]:
-                conf = ut.confirmacion(f"Seguro que deseas asignar el Padrino?", "Asignacion de Padrino")
-                if conf:
-                    valoresAnimal[4] = f"DniPadrino: {dniP}"
-                    hecho = True
-                    if hecho:
-                        for valor in valoresAnimal:
-                            valoresAnimal2 = "\n".join(valoresAnimal)
-                    else:
-                        print("Error al asignar padrino")
-                    cnt.set(anim[1], valoresAnimal2)
-                else:
-                    print("Operacion Denegada")
-            else:
-                print(existeP[1])#Mensaje indicando el error que se provoco al comprobar padrino
+        else:
+            print(f"El animal con el nombre {animalN} no existe en la BBDD")
     else:
-        print(f"El animal con el nombre {animalN} no existe en la BBDD")
-
+        print("No hay animales registrados")
 def desapadrinarAnimal():
     '''
     Metod para quitar el dni de un colaborador/padrino a un animal en caso de no tener "Sin Padrino"
     :return:
     '''
-    valoresAnimal2 = ""
-    hecho = False
-    nombreA = input("Introduce el nombre del animal que deseas quitar el padrino: ")
-    buscarA = comprobarAnimal(nombreA)
-    if buscarA[0]:
-        valoresAnimal = cnt.get(buscarA[1]).split('\n')
-        if not "DniPadrino: Sin Padrino" in valoresAnimal[4]:  # si el animal ya contiene un padrino
-            conf = ut.confirmacion(f"Seguro que deseas desapadrinar a {nombreA}?", "Desapadrinacion")
+    if comprobarVacioA():
+        valoresAnimal2 = ""
+        hecho = False
+        nombreA = input("Introduce el nombre del animal que deseas quitar el padrino: ").upper()
+        buscarA = comprobarAnimal(nombreA)
+        if buscarA[0]:
+            valoresAnimal = cnt.get(buscarA[1]).split('\n')
+            if not "DniPadrino: Sin Padrino" in valoresAnimal[4]:  # si el animal ya contiene un padrino
+                conf = ut.confirmacion(f"Seguro que deseas desapadrinar a {nombreA}?", "Desapadrinacion")
 
-            if conf:
-                valoresAnimal[4] = f"DniPadrino: Sin Padrino"#establecemos otra vez esta cadena para simular que no tiene padrino el animal
-                hecho = True
-                if hecho:
-                    for valor in valoresAnimal:
-                        valoresAnimal2 = "\n".join(valoresAnimal)
+                if conf:
+                    valoresAnimal[4] = f"DniPadrino: Sin Padrino"#establecemos otra vez esta cadena para simular que no tiene padrino el animal
+                    hecho = True
+                    if hecho:
+                        for valor in valoresAnimal:
+                            valoresAnimal2 = "\n".join(valoresAnimal)
+                    else:
+                        print("Error al desapadrinar padrino")
+                    cnt.set(buscarA[1], valoresAnimal2)#se cambia el valor a la clave del animal en la bbdd redis
                 else:
-                    print("Error al desapadrinar padrino")
-                cnt.set(buscarA[1], valoresAnimal2)#se cambia el valor a la clave del animal en la bbdd redis
-            else:
-                print("Operacion Denegada")
-        else:#si el animal no contiene un padrino
-            print("Este animal no tiene padrino")
+                    print("Operacion Denegada")
+            else:#si el animal no contiene un padrino
+                print("Este animal no tiene padrino")
+    else:
+        print("No hay animales registrados")
 
 
 def comprobarPadrino(dniPadrino):
@@ -350,7 +355,7 @@ def mostrarAnimalesP():
     :return:No devuelve nada
     '''
     nombres = ""
-    dniP = input("Introduce el dni del Padrino del que quieres conocer los animales: ")
+    dniP = input("Introduce el dni del Padrino del que quieres conocer los animales: ").upper()
     existeP = comprobarPadrino("colaborador:" +dniP)#comprueba si existe el dni del padrino que le queremos asignar al animal
     if existeP[0]:#si existe el dni en la bbdd
         keys = cnt.keys('A*')#guarda todas la keys que comiencen por una A

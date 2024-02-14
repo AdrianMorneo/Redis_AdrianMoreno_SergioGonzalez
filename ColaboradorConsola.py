@@ -34,7 +34,7 @@ def nuevo():
                     else:
                         fallos = 5
             else:
-                ut.fallo(fallos,f"El DNI debe tener 8 números seguidos de una letra. {fallos} fallos, límite 5")
+                fallos=ut.fallo(fallos,f"El DNI debe tener 8 números seguidos de una letra. {fallos} fallos, límite 5")
 
         finEntradaAlta = False  # Restablecer la variable para la entrada de datos
 
@@ -47,7 +47,7 @@ def nuevo():
                     print("\t\tNombre Valido\n")
                     finEntradaAlta = True  # Si el nombre es válido, se termina la entrada de datos
                 else:
-                    ut.fallo(fallos, f"El nombre debe contener al menos 2 caracteres. {fallos} fallos, límite 5")
+                    fallos=ut.fallo(fallos, f"El nombre debe contener al menos 2 caracteres. {fallos} fallos, límite 5")
 
         finEntradaAlta = False  # Restablecer la variable para la entrada de datos
         if fallos < 5:
@@ -59,7 +59,7 @@ def nuevo():
                     print("\t\tApellido Valido\n")
                     finEntradaAlta = True  # Si el apellido es válido, se termina la entrada de datos
                 else:
-                    ut.fallo(fallos, f"El apellido debe contener al menos 2 caracteres. {fallos} fallos, límite 5")
+                    fallos = ut.fallo(fallos, f"El apellido debe contener al menos 2 caracteres. {fallos} fallos, límite 5")
 
         finEntradaAlta = False  # Restablecer la variable para la entrada de datos
         if fallos < 5:
@@ -71,7 +71,7 @@ def nuevo():
                     print("\t\tTelefono Valido\n")
                     finEntradaAlta = True  # Si el teléfono es válido, se termina la entrada de datos
                 else:
-                    ut.fallo(fallos, f"El teléfono debe contener al menos 9 dígitos. {fallos} fallos, límite 5")
+                    fallos = ut.fallo(fallos, f"El teléfono debe contener al menos 9 dígitos. {fallos} fallos, límite 5")
 
         if fallos < 5:
             fechaInscripcion = datetime.now().strftime("%d-%m-%Y")  # Obtener la fecha de inscripción actual
@@ -90,8 +90,7 @@ def nuevo():
 
             # Guardar el colaborador en la base de datos
             con.set("colaborador:" + dni, colaborador_json)
-            print(dni)
-            print (colaborador_json)
+
 
             return True  # Retornar verdadero si se añadió correctamente el colaborador
         else:
@@ -120,7 +119,37 @@ def borrar():
                 print("Error al eliminar el colaborador:", errorEliminar)
     return False  # Retornar falso si hubo problemas al eliminar el colaborador
 
+def borrarMod(dni):
+    '''
+    Elimina un colaborador, pidiendo la clave DNI
+    :return:
+    '''
+    colaborador = buscarMod(dni)  # Buscar el colaborador a borrar en la base de datos
+    try:
+        con.delete("colaborador:" + colaborador["dni"])  # Eliminar el colaborador de la base de datos
+        return True  # Retornar verdadero si se eliminó correctamente el colaborador
+    except Exception as errorEliminar:
+        print("Error al eliminar el colaborador:", errorEliminar)
+        return False
+
 # Función para modificar un colaborador
+
+def buscarMod(dni):
+
+    '''
+    Busca colaborador con dni
+    :return: colaborador
+    '''
+
+     # Obtener el objeto colaborador en formato JSON desde Redis
+    colaborador_json = con.get(f"colaborador:{dni}")
+
+    # Verificar si el colaborador existe
+
+    # Deserializar el JSON a un diccionario de Python
+    colaborador = json.loads(colaborador_json)
+    return colaborador
+
 
 def modificar():
     '''
@@ -132,34 +161,42 @@ def modificar():
 
     if colaboradores:
         fallos = 0
-        while fallos < 5:
-            dni = input("Introduce DNI:").upper()
 
-            if ut.validarDNI(dni):
-                # Obtener el objeto colaborador en formato JSON desde Redis
-                colaborador_json = con.get(f"colaborador:{dni}")
-                if colaborador_json:
-                    # Deserializar el JSON a un diccionario de Python
-                    colaborador = json.loads(colaborador_json)
-                    modifiacion=False
-                    fallos = 0
+        dni = input("Introduce DNI:").upper()
 
-                    print("Qué quieres modificar")
-                    print("1. DNI")
-                    print("2. Nombre")
-                    print("3. Apellido")
-                    print("4. Teléfono")
-                    print("5. Fecha de inscripción")
-                    print("0. Salir de Modificar")
-                    opcion = input()
+        if ut.validarDNI(dni):
+            # Obtener el objeto colaborador en formato JSON desde Redis
+            colaborador_json = con.get(f"colaborador:{dni}")
+            if colaborador_json:
+                # Deserializar el JSON a un diccionario de Python
+                colaborador = json.loads(colaborador_json)
+                modifiacion=False
+                fallos = 0
+                print("Colaborador encontrado\n")
 
-                    if opcion == "0":
-                        return False
-                    elif opcion == "1":
-                        print("Has seleccionado Modificar DNI")
-                        while fallos < 5:
-                            dniNuevo = input ("Introduzca DNI: ")
-                            if ut.validarDNI(dniNuevo):
+                print("DNI:", colaborador["dni"])
+                print("Nombre:", colaborador["nombre"])
+                print("Apellido:", colaborador["apellido"])
+                print("Teléfono:", colaborador["telefono"])
+                print("Fecha de inscripción:", colaborador["fechaInscripcion"])
+
+                print("\nQué quieres modificar?")
+                print("1. DNI")
+                print("2. Nombre")
+                print("3. Apellido")
+                print("4. Teléfono")
+                print("5. Fecha de inscripción")
+                print("0. Salir de Modificar")
+                opcion = input()
+
+                if opcion == "0":
+                    return False
+                elif opcion == "1":
+                    print("Has seleccionado Modificar DNI")
+                    while fallos < 5 and not modifiacion:
+                        dniNuevo = input ("Introduzca nuevo DNI: ").upper()
+                        if ut.validarDNI(dniNuevo):
+                            if not comprobarDNIBBDD(dniNuevo):
                                 if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
                                     colaborador['dni'] = dniNuevo
                                     con.delete(f"colaborador:{dni}")
@@ -169,72 +206,74 @@ def modificar():
                                     # Guardar el colaborador modificado en Redis
                                     con.set("colaborador:" + dniNuevo, colaborador_json_modificado)
                                     return True
-                            else:
-                                ut.fallo(fallos,f"El DNI debe tener 8 números seguidos de una letra. {fallos} fallos, límite 5")
+                        else:
 
-                    elif opcion == "2":
-                        while fallos < 5:
-                            print("Has seleccionado Modificar NOMBRE")
-                            nombre = input ("Introduzca Nombre: ")
-                            if ut.validarDNI(nombre):
-                                if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
-                                    colaborador['nombre'] = nombre
-                                    modifiacion = True
-                            else:
-                                ut.fallo(fallos, f"El nombre debe contener al menos 2 caracteres. {fallos} fallos, límite 5")
+                            fallos=ut.fallo(fallos,f"El DNI debe tener 8 números seguidos de una letra. {fallos} fallos, límite 5")
 
-                    elif opcion == "3":
-                        while fallos < 5:
-                            print("Has seleccionado Modificar APELLIDO")
-                            apellido = input ("Introduzca Apellido: ")
-                            if ut.validarDNI(apellido):
-                                if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
-                                    colaborador['apellido'] = apellido
-                                    modifiacion = True
+                elif opcion == "2":
+                    while fallos < 5 and not modifiacion:
+                        print("Has seleccionado Modificar NOMBRE")
+                        nombre = input ("Introduzca nuevo Nombre: ").upper()
+                        if ut.validarDNI(nombre):
+                            if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
+                                colaborador['nombre'] = nombre
+                                modifiacion = True
+                        else:
+                            fallos=ut.fallo(fallos, f"El nombre debe contener al menos 2 caracteres. {fallos} fallos, límite 5")
 
-                            else:
-                                ut.fallo(fallos, f"El nombre debe contener al menos 2 caracteres. {fallos} fallos, límite 5")
+                elif opcion == "3":
+                    while fallos < 5 and not modifiacion:
+                        print("Has seleccionado Modificar APELLIDO")
+                        apellido = input ("Introduzca nuevo Apellido: ").upper()
+                        if ut.validarDNI(apellido):
+                            if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
+                                colaborador['apellido'] = apellido
+                                modifiacion = True
 
-                    elif opcion == "4":
-                        while fallos < 5:
+                        else:
+                            fallos=ut.fallo(fallos, f"El nombre debe contener al menos 2 caracteres. {fallos} fallos, límite 5")
 
-                            print("Has seleccionado Modificar TELEFONO")
+                elif opcion == "4":
+                    while fallos < 5 and not modifiacion:
 
-                            telefono = input("Introduzca Teléfono: ")
-                            if ut.validarTelefono(telefono):
-                                if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
-                                    colaborador['telefono'] = telefono
-                                    modifiacion = True
-                            else:
-                                ut.fallo(fallos, f"El teléfono debe contener al menos 9 dígitos. {fallos} fallos, límite 5")
+                        print("Has seleccionado Modificar TELEFONO")
+
+                        telefono = input("Introduzca nuevo Teléfono: ")
+                        if ut.validarTelefono(telefono):
+                            if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
+                                colaborador['telefono'] = telefono
+                                modifiacion = True
+                        else:
+                            fallos = ut.fallo(fallos, f"El teléfono debe contener al menos 9 dígitos. {fallos} fallos, límite 5")
 
 
-                    elif opcion == "5":
-                        while fallos < 5:
-                            print("Has seleccionado Modificar FECHA DE INSCRIPCION")
-                            fecha = input ("Introduzca Fecha de Inscripcion: (dd-mm-aa)")
-                            if ut.validarFecha(fecha):
-                                if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
-                                    colaborador['fechaInscripcion'] = fecha
-                                    modifiacion = True
-                            else:
-                                ut.fallo(fallos, f"La fehca debe tener el siguiente formato: (dd-mm-aa). {fallos} fallos, límite 5")
+                elif opcion == "5":
+                    while fallos < 5 and not modifiacion:
+                        print("Has seleccionado Modificar FECHA DE INSCRIPCION")
+                        fecha = input ("Introduzca nueva Fecha de Inscripcion: (dd-mm-aa)")
+                        if ut.validarFecha(fecha):
+                            if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
+                                colaborador['fechaInscripcion'] = fecha
+                                modifiacion = True
+                        else:
+                            fallos = ut.fallo(fallos, f"La fehca debe tener el siguiente formato: (dd-mm-aa). {fallos} fallos, límite 5")
 
-                    else:
-                        print("Opcion no valida.")
+                else:
+                    print("Opcion no valida.")
 
-                    if modifiacion:
-                        # Convertir el diccionario modificado a formato JSON
-                        colaborador_json_modificado = json.dumps(colaborador)
+                if modifiacion:
+                    # Convertir el diccionario modificado a formato JSON
+                    colaborador_json_modificado = json.dumps(colaborador)
 
-                        # Guardar el colaborador modificado en Redis
-                        con.set("colaborador:" + dni, colaborador_json_modificado)
-                        return True
-                    else:
-                        return False
-            else:
-                fallos += 1
-                print(f"El DNI debe tener 8 números seguidos de una letra. {fallos} fallos, límite 5")
+                    # Guardar el colaborador modificado en Redis
+                    con.set("colaborador:" + dni, colaborador_json_modificado)
+                    return True
+                else:
+                    return False
+        else:
+            fallos += 1
+            print(f"El DNI debe tener 8 números seguidos de una letra.")
+            return False
 
 def comprobarDNIBBDD(dni):
     '''
@@ -248,10 +287,11 @@ def comprobarDNIBBDD(dni):
     # Verificar si el colaborador existe
     if colaborador_json:
         # Deserializar el JSON a un diccionario de Python
+        print("Dni metido en la BBDD")
         colaborador = json.loads(colaborador_json)
         return colaborador
     else:
-        print("El colaborador con DNI", dni, "no se encontró en la base de datos.")
+        print("El colaborador con DNI", dni, "es válido, todavía no está registrado en la base de datos.")
         return None
 
 def buscar():

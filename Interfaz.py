@@ -123,29 +123,27 @@ def ejecutar():
                     break
                 #opcion 1 nuevo animal
                 elif opcion_animales == "1":
-                    print("Has seleccionado agregar un Animal")
+
                     a.agregarAnimal()
                 #opcion 2 borrar animal
                 elif opcion_animales == "2":
-                    print("Has seleccionado eliminar Animal")
+
                     a.eliminarAnimal()
                 #opcion 3 modificar animal
                 elif opcion_animales == "3":
-                    print("Has seleccionado modificar Animal")
+
                     a.modificarAnimal()
                 #opcion 4 buscar animal
                 elif opcion_animales == "4":
-                    print("Has seleccionado buscar Animal")
+
                     a.buscarAnimal()
                 #opcion 5 Mostrar todos los animales
                 elif opcion_animales == "5":
-                    print("Has seleccionado mostrar todos los animales")
                     a.mostrarTodos()
                 #opcion 6 apadrina animal
                 elif opcion_animales == "6":
                     colaboradores = c.mostrarTodos()
                     if colaboradores:
-                        print("Has seleccionado apadrinar")
                         a.asignarPadrino()
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
@@ -153,7 +151,6 @@ def ejecutar():
                 elif opcion_animales == "7":
                     colaboradores = c.mostrarTodos()
                     if colaboradores:
-                        print("Has seleccionado desapadrinar")
                         a.desapadrinarAnimal()
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
@@ -196,8 +193,11 @@ def ejecutar():
                     #comprueba si hay colaboradores
                     colaboradores = c.mostrarTodos()
                     if colaboradores:
-                        c.modificar()
-                        print(Fore.GREEN + "Colaborador MODIFICADO" + Style.RESET_ALL)
+                        modificado = c.modificar()
+                        if modificado:
+                            print(Fore.GREEN + "Colaborador MODIFICADO" + Style.RESET_ALL)
+                        else:
+                            print(Fore.RED + "No se ha realizado ninguna modificacion" + Style.RESET_ALL)
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
@@ -215,7 +215,7 @@ def ejecutar():
                             print("Teléfono:", colaborador["telefono"])
                             print("Fecha de inscripción:", colaborador["fechaInscripcion"])
                         else:
-                            print(Fore.RED + "No se encontró ningún colaborador" + Style.RESET_ALL)
+                            print(Fore.RED + "No se encontró ningún colaborador con ese DNI" + Style.RESET_ALL)
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
