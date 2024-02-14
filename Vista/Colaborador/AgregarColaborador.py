@@ -7,6 +7,14 @@ import ColaboradorConsola as cc  # Importar módulo para manejar la lógica de c
 
 # Función para manejar el evento de agregar un colaborador
 def handleAgregar(dni, nombre, apellido, telefono):
+    '''
+
+    :param dni:  recibe dni introducido
+    :param nombre:  recibe nombre introducido
+    :param apellido: recibe apellido introducido
+    :param telefono: recibe telefono introducido
+    :return: nada
+    '''
     # Validación del DNI
     if not ut.validarDNI(dni):
         # Si el DNI no es válido, mostrar una alerta
@@ -59,6 +67,10 @@ def handleAgregar(dni, nombre, apellido, telefono):
 
 # Función para mostrar la ventana de agregar colaborador
 def agregarColaboradorVentana():
+    '''
+    metodo que llama a la ventana de agregar colaborador
+    :return:
+    '''
     global agregarColaboradorWindows
     # Crear y configurar la ventana
     agregarColaboradorWindows = QMainWindow()
@@ -93,6 +105,8 @@ def agregarColaboradorVentana():
     layout.addWidget(telefono)
 
     # Manejador del evento clic para agregar colaborador
+    # Se utiliza lambda porque no se ha encontrado otra manera de controlar el efecto,
+    # ya que si usabamos otro método no hacía efecto el click
     handleAgregarClick = lambda: handleAgregar(dni.text().upper(), nombre.text().upper(), apellido.text().upper(), telefono.text().upper())
 
     # Botón para agregar colaborador

@@ -1,5 +1,5 @@
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QLabel, QLineEdit
+from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget, QLabel, QLineEdit, QMessageBox
 from . import AgregarColaborador as ac  # Importar módulo para agregar colaborador
 from . import MostrarTodosColaboradores as mt  # Importar módulo para mostrar todos los colaboradores
 from . import ModificarColaborador as mc  # Importar módulo para modificar colaborador
@@ -33,10 +33,20 @@ def handleMostrarTodosColaboradores():
 def handleApadrinarAnimal():
     # Manejar el evento de apadrinar un animal (sin implementar)
     print("Apadrinar animal =)")
+    mensaje = QMessageBox()
+    mensaje.setWindowTitle("Aviso")
+    mensaje.setText("Función no disponible en la versión Gráfica, pruebe en la versión de consola.\n Disculpe las molestias.")
+    mensaje.setIcon(QMessageBox.Information)
+    mensaje.exec_()
 
 def handleDesapadrinarAnimal():
     # Manejar el evento de desapadrinar un animal (sin implementar)
     print("Desapadrinar animal :(")
+    mensaje = QMessageBox()
+    mensaje.setWindowTitle("Aviso")
+    mensaje.setText("Función no disponible en la versión Gráfica, pruebe en la versión de consola.\nDisculpe las molestias.")
+    mensaje.setIcon(QMessageBox.Information)
+    mensaje.exec_()
 
 def handleVolver():
     # Manejar el evento de volver al menú principal
@@ -44,6 +54,10 @@ def handleVolver():
 
 # Función para mostrar el submenú de colaboradores
 def mostrarSubMenuColaboradores():
+    '''
+    Metodo que controla y gestiona la ventana deSubmenú Colaboradores
+    :return:
+    '''
     global submenu_window_colaboradores
     submenu_window_colaboradores = QMainWindow()
     submenu_window_colaboradores.setWindowTitle('Submenu de Colaboradores')

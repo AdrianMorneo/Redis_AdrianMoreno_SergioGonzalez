@@ -97,8 +97,13 @@ def imprimir_menu_colaboradores():
 # Utiliza bucles para permitir al usuario navegar por los diferentes menús y realizar operaciones.
 # Imprime los menús y opciones, y realiza las operaciones que quiera el usuario.
 def ejecutar():
+    '''
+    Ejecuta los prints correspondientes y gestiona las peticiones de usuario en la interfaz de consola
+    :return:
+    '''
     global colaborador
     imprimir_bienvenida()
+    #Bucle infinito hasta que el usuario pulsa 0 para salir
     while True:
 
         imprimir_menu_principal()
@@ -107,34 +112,36 @@ def ejecutar():
         if opcion_principal == "0":
             tprint("HASTA PRONTO")
             break
-
+        #imprime menu de animales si pulsaste 1
         elif opcion_principal == "1":
+            #Bucle infinito hasta que el usuario pulsa 0 para salir
             while True:
                 imprimir_menu_animales()
                 opcion_animales = input("\n\t" + Fore.CYAN + Style.BRIGHT + "Seleccione una opcion: " + Style.RESET_ALL)
-
+                #opcion 0 vuelve
                 if opcion_animales == "0":
                     break
+                #opcion 1 nuevo animal
                 elif opcion_animales == "1":
                     print("Has seleccionado agregar un Animal")
                     a.agregarAnimal()
-
+                #opcion 2 borrar animal
                 elif opcion_animales == "2":
                     print("Has seleccionado eliminar Animal")
                     a.eliminarAnimal()
-
+                #opcion 3 modificar animal
                 elif opcion_animales == "3":
                     print("Has seleccionado modificar Animal")
                     a.modificarAnimal()
-
+                #opcion 4 buscar animal
                 elif opcion_animales == "4":
                     print("Has seleccionado buscar Animal")
                     a.buscarAnimal()
-
+                #opcion 5 Mostrar todos los animales
                 elif opcion_animales == "5":
                     print("Has seleccionado mostrar todos los animales")
                     a.mostrarTodos()
-
+                #opcion 6 apadrina animal
                 elif opcion_animales == "6":
                     colaboradores = c.mostrarTodos()
                     if colaboradores:
@@ -142,7 +149,7 @@ def ejecutar():
                         a.asignarPadrino()
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
-
+                #opcion 7 desapadrinar animal
                 elif opcion_animales == "7":
                     colaboradores = c.mostrarTodos()
                     if colaboradores:
@@ -153,16 +160,16 @@ def ejecutar():
 
                 else:
                     print(Fore.RED + "Opcion no valida." + Style.RESET_ALL)
-
+        #imprime menu de colaboradores si pulsaste 2
         elif opcion_principal == "2":
             while True:
                 imprimir_menu_colaboradores()
                 opcion_colaboradores = input(
                     "\n\t" + Fore.CYAN + Style.BRIGHT + "Seleccione una opción: " + Style.RESET_ALL)
-
+                #opcion 0 vuelve
                 if opcion_colaboradores == "0":
                     break
-
+                #Opcion 1 nuevo colaborador
                 elif opcion_colaboradores == "1":
 
                     registro = c.nuevo()
@@ -171,8 +178,10 @@ def ejecutar():
                     else:
                         print(Fore.RED + "Colaborador NO REGISTRADO" + Style.RESET_ALL)
 
+                #Opcion 2 elimina colaborador
 
                 elif opcion_colaboradores == "2":
+                    #comprueba si hay colaboradores
                     colaboradores = c.mostrarTodos()
                     if colaboradores:
                         eliminado = c.borrar()
@@ -182,8 +191,9 @@ def ejecutar():
                             print(Fore.RED + "Colaborador NO ELIMINADO" + Style.RESET_ALL)
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
-
+                #Opcion 3 modifica Colaborador
                 elif opcion_colaboradores == "3":
+                    #comprueba si hay colaboradores
                     colaboradores = c.mostrarTodos()
                     if colaboradores:
                         c.modificar()
@@ -191,6 +201,7 @@ def ejecutar():
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
+                #Opcion 4 Muestra Busca un colaborador
                 elif opcion_colaboradores == "4":
                     colaboradores = c.mostrarTodos()
                     if colaboradores:
@@ -208,6 +219,7 @@ def ejecutar():
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
 
+                #Opcion 5 Muestra todos Colaboradores
                 elif opcion_colaboradores == "5":
                     colaboradores = c.mostrarTodos()
                     if colaboradores:
@@ -223,7 +235,7 @@ def ejecutar():
                             print("\n")
                     else:
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
-
+                #Opcion 6 Muestra todos los animales apadrinados
                 elif opcion_colaboradores == "6":
 
                     colaboradores = c.mostrarTodos()
@@ -233,7 +245,7 @@ def ejecutar():
                         print(Fore.RED + "Todavia no hay colaboradores registrados" + Style.RESET_ALL)
                 else:
                     print(Fore.RED + "Opción no válida." + Style.RESET_ALL)
-
+        #Borra la base de datos si se pulsa 3
         elif opcion_principal == "3":
             cx.borrarBase()
 

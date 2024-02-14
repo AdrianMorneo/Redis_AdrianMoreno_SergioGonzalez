@@ -9,6 +9,10 @@ con = cx.conectar()
 
 # Función para agregar un nuevo colaborador
 def nuevo():
+    '''
+    Metodo que realiza la creacción de un nuevoco laborador, controla los parametros y crea diccionario de colaboradores
+    :return:
+    '''
     finAlta = False  # Variable para controlar el bucle de alta de colaborador
     while not finAlta:
         finAlta = True
@@ -95,6 +99,10 @@ def nuevo():
 
 # Función para borrar un colaborador
 def borrar():
+    '''
+    Elimina un colaborador, pidiendo la clave DNI
+    :return:
+    '''
     colaborador = buscar()  # Buscar el colaborador a borrar en la base de datos
 
     if colaborador is not None:
@@ -115,7 +123,11 @@ def borrar():
 # Función para modificar un colaborador
 
 def modificar():
-
+    '''
+    metodo que modifica un colaborador, de manera que elimina el colaborador que entra y lo introduce de nuevo con los
+    mismos parametros, salvo el que se ha modificado.
+    :return:
+    '''
     colaboradores = mostrarTodos()
 
     if colaboradores:
@@ -225,6 +237,11 @@ def modificar():
                 print(f"El DNI debe tener 8 números seguidos de una letra. {fallos} fallos, límite 5")
 
 def comprobarDNIBBDD(dni):
+    '''
+    Comprueba si el dni introducido está en la BBDD
+    :param dni: recibe DNI
+    :return: Colaborador o None
+    '''
     # Obtener el objeto colaborador en formato JSON desde Redis
     colaborador_json = con.get(f"colaborador:{dni}")
 
@@ -238,8 +255,13 @@ def comprobarDNIBBDD(dni):
         return None
 
 def buscar():
-    colaboradores = mostrarTodos()
 
+    '''
+    Busca colaborador con dni
+    :return: colaborador o None
+    '''
+    colaboradores = mostrarTodos()
+#Comprueba si hay colaboradores
     if colaboradores:
         dni = input("Introduce DNI:").upper()
         fallos = 0
@@ -264,6 +286,10 @@ def buscar():
 
 
 def mostrarTodos():
+    '''
+    Busca todos los colaboradores
+    :return: listaColaboradores
+    '''
     # Obtener todas las claves que coinciden con el patrón "colaborador:*" en la base de datos
     keys = con.keys("colaborador:*")
 

@@ -6,11 +6,19 @@ import ColaboradorConsola as cc
 
 
 def handleVuelveSubmenuClick():
-    # Función para manejar el evento de volver al menú principal
+    '''
+     Función para manejar el evento de volver al menú principal
+    :return: Nada
+    '''
+
     mostrarColaboradores.close()
 
 
 def mostrarColaboradoresWindows():
+    '''
+    Muestra la ventana de colaboradores
+    :return: Nada
+    '''
     # Función para mostrar la ventana de todos los colaboradores
     if cc.mostrarTodos():
         # Verificar si hay colaboradores en la base de datos

@@ -1,4 +1,8 @@
 def cogerEstiloPrincipal():
+    '''
+    Css utilizado para la pantalla principal
+    :return:
+    '''
     return """
         QMainWindow {
             background-color: #0D050E;
@@ -22,6 +26,10 @@ def cogerEstiloPrincipal():
         }
     """
 def cogerEstiloAnimales():
+    """
+    Css utilizado para la interfaz grafica de animales
+    :return: devuelve String correspondiente de CSS
+    """
     return """
             QMainWindow {
                 background-color: #e4ebf2;
@@ -94,6 +102,10 @@ def cogerEstiloAnimales():
         """
 
 def cogerEstiloColaboradores():
+    """
+    Css utilizado para la interfaz grafica de Colaboradores
+    :return: devuelve String correspondiente de CSS
+    """
     return """
         QMainWindow {
             background-color: #253f5b;

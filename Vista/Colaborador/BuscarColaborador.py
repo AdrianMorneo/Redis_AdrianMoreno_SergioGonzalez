@@ -15,6 +15,10 @@ fecha_inscripcion_label = None
 
 # Función para buscar un colaborador por su DNI
 def buscarColaborador():
+    '''
+    Busca un colaborador y lo printea en los label, limpia la linea DNI
+    :return:
+    '''
     dni = dniLineEditBuscar.text().upper()
     colaborador = cg.buscar(dni)
     if colaborador:
@@ -28,6 +32,20 @@ def buscarColaborador():
     else:
         # Si el colaborador no es encontrado, mostrar un mensaje informativo
         QMessageBox.information(None, "Colaborador no encontrado", "El colaborador con el DNI especificado no fue encontrado.", QMessageBox.Ok)
+
+def limpiar():
+    '''
+    Limpia los campos y los deja en blanco
+    :return:
+    '''
+    dni_label.setText("DNI: ")
+    nombre_label.setText("Nombre: ")
+    apellido_label.setText("Apellidos: ")
+    telefono_label.setText("Teléfono: ")
+    telefono_label.setText("Teléfono: ")
+    fecha_inscripcion_label.setText("Fecha de Inscripción: ")
+    buscarColaboradorWindow.close
+
 
 # Función para mostrar la ventana de búsqueda de colaboradores
 def buscarColaboradorVentana():
@@ -70,6 +88,11 @@ def buscarColaboradorVentana():
             layout.addWidget(telefono_label)
             fecha_inscripcion_label = QLabel("Fecha de Inscripción:")
             layout.addWidget(fecha_inscripcion_label)
+
+            # Botón para limpiar
+            limpiar_button = QPushButton("limpiar")
+            limpiar_button.clicked.connect(limpiar)
+            layout.addWidget(limpiar_button)
 
             # Botón para volver
             volver_button = QPushButton("Volver")
