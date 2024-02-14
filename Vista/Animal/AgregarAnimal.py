@@ -22,7 +22,7 @@ def handleAgregar(tipo, nombre, edad):
 
 
     elif not aml.comprobarAnimal(nombre):
-                # Si el DNI ya existe en la base de datos, mostrar una alerta
+        #Si el DNI ya existe en la base de datos, mostrar una alerta
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Alerta")

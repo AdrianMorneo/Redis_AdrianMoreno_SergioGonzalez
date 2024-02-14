@@ -1,7 +1,7 @@
 from datetime import datetime
 
 def validarTipoA(tipo):
-    tipos_animales = ["MAMÍFERO", "AVE", "PEZ", "REPTIL", "ANFIBIO"]
+    tipos_animales = ["MAMIFERO", "AVE", "PEZ", "REPTIL", "ANFIBIO"]
 
     if tipo in tipos_animales:
         return True

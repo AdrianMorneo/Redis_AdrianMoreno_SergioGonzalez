@@ -8,13 +8,17 @@ import AnimalGrafico as ag  # Importar módulo para interactuar con la base de d
 import Utiles as ut  # Importar módulo de utilidades para validaciones
 import ColaboradorConsola as cc  # Importar módulo para interactuar con la base de datos de colaboradores (consola)
 import Animal as aml
-
+import Conexion as conect
 
 # Variable global para almacenar la ventana de modificación
 modificarAnimalWindow = None
+cnt = conect.conectar()
+dniLineEditBuscar = None
+nombreLineEdit = None
+tipoComboBox = None
+edadLineEdit = None
 
-
-def confirmarModificacion(nombreAnt, tipo, nombre, edad):
+def confirmarModificacion(tipo, nombre, edad):
 
     # Procesar la respuesta del usuario
     if not ut.validarTipoA(tipo):
@@ -83,23 +87,27 @@ def confirmarModificacion(nombreAnt, tipo, nombre, edad):
 
 def buscarAnimal():
     # Función para buscar un animal por su DNI
-    dni = dniLineEditBuscar.text().upper()
-    '''
-    animal = ag.buscar(dni)  # Buscar el animal en la base de datos
-    if animal:
+    animalN = dniLineEditBuscar.text().upper()
+    print(animalN)
+    animal = ag.comprobarAnimal(animalN)  # Buscar el animal en la base de datos
+    print(animal[0])
+    if animal[0]:
+        valoresAnimal = cnt.get(animal[1]).split("\n")
+        nombre= valoresAnimal[2].split(": ")
+        tipo=valoresAnimal[1].split(": ")
+        edad=valoresAnimal[3].split(": ")
         # Si se encuentra el colaborador, llenar los campos con sus datos
-        tipoComboBox.setCurrentText(animal['dni'])
-        nombreLineEdit.setText(animal['nombre'])
-        edadLineEdit.setText(animal['apellido'])
+        tipoComboBox.setCurrentText(tipo[1])
+        nombreLineEdit.setText(nombre[1])
+        edadLineEdit.setText(edad[1])
 
     else:
         # Si el animal no es encontrado, mostrar un mensaje informativo
-        QMessageBox.information(None, "animal no encontrado", "El animal con el DNI especificado no fue encontrado.", QMessageBox.Ok)
-    '''
+        QMessageBox.information(None, "animal no encontrado", "El animal especificado no fue encontrado.", QMessageBox.Ok)
 
 def modificarAnimalVentana():
     # Función para mostrar la ventana de modificación de animal
-    #if ColaboradorConsola.mostrarTodos():
+    if ag.comprobarVacioA():
         global modificarAnimalWindow
         # Si la ventana ya está creada, simplemente la mostramos
         if modificarAnimalWindow is not None:
@@ -119,41 +127,41 @@ def modificarAnimalVentana():
         layout = QVBoxLayout()
 
         # Agregar un QLabel y un QLineEdit para buscar un colaborador por su DNI
-        dniLabelBuscar = QLabel("Buscar Colaborador por DNI:")
+        dniLabelBuscar = QLabel("Buscar Animal por nombre:")
         layout.addWidget(dniLabelBuscar)
+
         global dniLineEditBuscar
         dniLineEditBuscar = QLineEdit()
         layout.addWidget(dniLineEditBuscar)
         buscar_button = QPushButton("Buscar")
-        buscar_button.clicked.connect(buscarAnimal())
+        buscar_button.clicked.connect(buscarAnimal)
         layout.addWidget(buscar_button)
 
-        # Agregar etiquetas y campos de entrada para DNI, nombre, apellido y teléfono
-        dniLabel = QLabel("DNI: (00000000A)")
+        # Agregar etiquetas y campos de entrada para nombre, tipo y edad
+        dniLabel = QLabel("TIPO")
         layout.addWidget(dniLabel)
         global tipoComboBox
         tipoComboBox = QComboBox()
         tipoComboBox.addItems(["MAMIFERO", "AVE", "PEZ", "REPTIL", "ANFIBIO"])
         layout.addWidget(tipoComboBox)
-
+        global nombreLabel
         nombreLabel = QLabel("Nombre: (mínimo 2 letras)")
         layout.addWidget(nombreLabel)
         global nombreLineEdit
         nombreLineEdit = QLineEdit()
         layout.addWidget(nombreLineEdit)
-
+        global edadLabel
         edadLabel = QLabel("Edad: (Entre 0 y 100)")
         layout.addWidget(edadLabel)
         global edadLineEdit
         edadLineEdit = QLineEdit()
         layout.addWidget(edadLineEdit)
 
-
         # Agregar un QPushButton para confirmar la modificación del animal
         modificar_button = QPushButton("Modificar")
         # Conectar el botón de modificar con la función de confirmar modificación
         modificar_button.clicked.connect(
-            lambda: confirmarModificacion(dniLineEditBuscar.text().upper(), tipoComboBox.currentText().upper(),
+            lambda: confirmarModificacion(tipoComboBox.currentText().upper(),
                                           nombreLineEdit.text().upper(),
                                           edadLineEdit.text().upper()))
         layout.addWidget(modificar_button)
@@ -172,15 +180,12 @@ def modificarAnimalVentana():
 
         # Establecer el widget principal como widget central de la ventana
         modificarAnimalWindow.setCentralWidget(widget)
-
         # Mostrar la ventana de modificación de animal
         modificarAnimalWindow.show()
-"""
     else:
-        # Si no hay animal en la base de datos, mostrar un mensaje de aviso
+        # Si no hay animales en la base de datos, mostrar un mensaje informativo
         mensaje = QMessageBox()
         mensaje.setWindowTitle("Aviso")
-        mensaje.setText("No hay animal en la BBDD.")
+        mensaje.setText("No hay Animales en la BBDD.")
         mensaje.setIcon(QMessageBox.Information)
         mensaje.exec_()
-"""
