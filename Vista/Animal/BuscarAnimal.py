@@ -17,14 +17,13 @@ edad_label = None
 padrino_label = None
 
 
-# Función para buscar un Animal por su DNI
+# Función para buscar un Animal por su nombre
 def buscarAnimal():
 
     animalN = nombreLineEditBuscar.text().upper()
     animal = ag.comprobarAnimal(animalN)  # Buscar el animal en la base de datos
     if animal[0]:
         valoresAnimal = cnt.get(animal[1]).split("\n")
-
         nombre = valoresAnimal[2]
         tipo = valoresAnimal[1]
         edad = valoresAnimal[3]
@@ -63,7 +62,7 @@ def buscarAnimalVentana():
 
         layout = QVBoxLayout()
 
-        # Etiqueta y campo de entrada para introducir el DNI del Animal
+        # Etiqueta y campo de entrada para introducir el nombre del Animal
         dniLabelBuscar = QLabel("Introduce el Nombre del Animal:")
         layout.addWidget(dniLabelBuscar)
         global nombreLineEditBuscar

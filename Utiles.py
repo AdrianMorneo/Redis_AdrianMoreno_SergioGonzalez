@@ -1,6 +1,11 @@
 from datetime import datetime
 
 def validarTipoA(tipo):
+    '''
+    Metodo para comprobar si el tipo establecido en un animal es alguno de los permitidos por el programa
+    :param tipo: tipo introducidio por el usuario
+    :return: True o False en funcion de si esta en la lista de los tipos permitidos o no
+    '''
     tipos_animales = ["MAMIFERO", "AVE", "PEZ", "REPTIL", "ANFIBIO"]
 
     if tipo in tipos_animales:
@@ -61,6 +66,11 @@ def fallo(fallos, mensaje):
     return fallos + 1
 
 def validarEdad(edad):
+    '''
+    Metodo para validar la edad de los animales, no permite se superior a 100
+    :param edad: edad introducida por el usuario
+    :return: devuelve True o False
+    '''
     try:
         edad = int(edad)
         if 0 <= edad < 100:
@@ -69,6 +79,7 @@ def validarEdad(edad):
             return False
     except ValueError:
         return False
+
 def confirmacion(mensaje, tipo):
     """
     Metodo que permite la gestion de confirmaciones

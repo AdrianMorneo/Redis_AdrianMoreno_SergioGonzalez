@@ -128,7 +128,7 @@ def modificarAnimalVentana():
         # Crear un layout vertical para organizar los elementos de la ventana
         layout = QVBoxLayout()
 
-        # Agregar un QLabel y un QLineEdit para buscar un colaborador por su DNI
+        # Agregar un QLabel y un QLineEdit para buscar un animal por su nombre
         dniLabelBuscar = QLabel("Buscar Animal por nombre:")
         layout.addWidget(dniLabelBuscar)
 

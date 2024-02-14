@@ -7,20 +7,20 @@ import ColaboradorGrafico as cg  # Importar módulo para manejar la lógica de c
 import AnimalGrafico as ag  # Importar módulo para manejar la lógica de colaboradores
 
 
-# Variable global para almacenar la ventana de eliminación de colaborador
+# Variable global para almacenar la ventana de eliminación de animal
 eliminarAnimalWindow = None
 
-# Función para eliminar un colaborador
+# Función para eliminar un animal
 def eliminarAnimal():
     nombre = nombreLineEditEliminar.text().upper()
     animal = ag.comprobarAnimal(nombre)
     if animal[0]:
-        # Confirmar la eliminación del colaborador
+        # Confirmar la eliminación del animal
         confirmacion = QMessageBox.question(eliminarAnimalWindow, "Confirmar eliminación",
                                              f"¿Estás seguro de que quieres eliminar al animal {nombre}?",
                                             QMessageBox.Yes | QMessageBox.No)
         if confirmacion == QMessageBox.Yes:
-            # Si se confirma, eliminar al colaborador
+            # Si se confirma, eliminar al animal
             ag.eliminar(nombre)
             QMessageBox.information(eliminarAnimalWindow, "Colaborador eliminado",
                                     f"El animal {nombre} ha sido eliminado correctamente.",
@@ -28,13 +28,13 @@ def eliminarAnimal():
 
             nombreLineEditEliminar.clear()
     else:
-        # Si el colaborador no es encontrado, mostrar un mensaje informativo
+        # Si el animal no es encontrado, mostrar un mensaje informativo
         QMessageBox.information(eliminarAnimalWindow, "Animal no encontrado",
                                 f"El Animal {nombre} especificado no fue encontrado.",
                                 QMessageBox.Ok)
     nombreLineEditEliminar.clear()
 
-# Función para mostrar la ventana de eliminación de colaborador
+# Función para mostrar la ventana de eliminación de animal
 def eliminarAnimalVentana():
     if ag.comprobarVacioA():
         global eliminarAnimalWindow
@@ -53,14 +53,14 @@ def eliminarAnimalVentana():
 
         layout = QVBoxLayout()
 
-        # Etiqueta y campo de entrada para introducir el DNI del colaborador a eliminar
+        # Etiqueta y campo de entrada para introducir el nombre del animal a eliminar
         nombreLabelEliminar = QLabel("Introduce el Nombre del Animal a eliminar:")
         layout.addWidget(nombreLabelEliminar)
         global nombreLineEditEliminar
         nombreLineEditEliminar = QLineEdit()
         layout.addWidget(nombreLineEditEliminar)
 
-        # Botón para eliminar el colaborador
+        # Botón para eliminar el animal
         eliminar_button = QPushButton("Eliminar")
         eliminar_button.clicked.connect(eliminarAnimal)
         layout.addWidget(eliminar_button)

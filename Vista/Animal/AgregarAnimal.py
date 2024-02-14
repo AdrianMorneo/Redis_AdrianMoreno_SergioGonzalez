@@ -8,21 +8,15 @@ import Animal as aml
 
 # Función para manejar el evento de agregar un colaborador
 def handleAgregar(tipo, nombre, edad):
-    # Validación del DNI
     if not ut.validarTipoA(tipo):
-        # Si el DNI no es válido, mostrar una alerta
+        # Si el tipo no es válido, mostrar una alerta
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Alerta")
         alerta.setText("Tipo no válido")
         alerta.exec_()
-    ###########################
-    ############### comprobar si el nombre esta en la bbdd
-    ###############
-
-
     elif not aml.comprobarAnimal(nombre):
-        #Si el DNI ya existe en la base de datos, mostrar una alerta
+        #Si el nombre ya existe en la base de datos, mostrar una alerta
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Alerta")
@@ -37,7 +31,7 @@ def handleAgregar(tipo, nombre, edad):
         alerta.setWindowTitle("Alerta")
         alerta.setText("Nombre no válido, mínimo 2 dígitos")
         alerta.exec_()
-    # Validación del apellido
+    # Validación de la edad
     elif not ut.validarEdad(edad):
         # Si la Edad no es válida, mostrar una alerta
         alerta = QMessageBox()
@@ -46,21 +40,21 @@ def handleAgregar(tipo, nombre, edad):
         alerta.setText("Edad no válida, debe ser un número entre 0 y 100")
         alerta.exec_()
     else:
-        # Si todos los datos son válidos, agregar el colaborador
+        # Si todos los datos son válidos, agregar el animal
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
-        alerta.setWindowTitle("Colaborador Agregado")
-        alerta.setText("Colaborador Agregado")
+        alerta.setWindowTitle("Animal Agregado")
+        alerta.setText("Animal Agregado")
         ag.agregar(tipo, nombre, edad)
         print("Agregado")
         alerta.exec_()
 
-# Función para mostrar la ventana de agregar colaborador
+# Función para mostrar la ventana de agregar animal
 def agregarAnimalVentana():
     global agregarAnimalWindows
     # Crear y configurar la ventana
     agregarAnimalWindows = QMainWindow()
-    agregarAnimalWindows.setWindowTitle('Agregar Colaborador')
+    agregarAnimalWindows.setWindowTitle('Agregar Animal')
     agregarAnimalWindows.setGeometry(200, 200, 400, 200)
 
     # Estilo de la interfaz de usuario
@@ -69,7 +63,7 @@ def agregarAnimalVentana():
 
     layout = QVBoxLayout()
 
-    # Etiquetas y campos de entrada para DNI, Nombre, Apellido y Teléfono
+    # Etiquetas y campos de entrada para tipo, nombre y edad
     tipoLabel = QLabel("Tipo: ")
     layout.addWidget(tipoLabel)
     tipoComboBox = QComboBox()
@@ -86,15 +80,15 @@ def agregarAnimalVentana():
     edad = QLineEdit()
     layout.addWidget(edad)
 
-    # Manejador del evento clic para agregar colaborador
+    # Manejador del evento clic para agregar animal
     handleAgregarClick = lambda: handleAgregar(tipoComboBox.currentText().upper(), nombre.text().upper(), edad.text().upper())
 
-    # Botón para agregar colaborador
+    # Botón para agregar animal
     add_button = QPushButton("Agregar")
     add_button.clicked.connect(handleAgregarClick)
     layout.addWidget(add_button)
 
-    # Botón para volver al menú de colaboradores
+    # Botón para volver al menú de animales
     botonVolver = QPushButton("Volver")
     botonVolver.clicked.connect(agregarAnimalWindows.close)
     layout.addWidget(botonVolver)
