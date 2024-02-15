@@ -21,11 +21,14 @@ def conectar():
             db=configuracion.getint('conexion', 'db'),
             decode_responses=True
         )
+
         return con  # Devolver el objeto de conexión establecido
+
 
     except redis.ConnectionError as e:
         # Capturar la excepción ConnectionError si falla la conexión a Redis
         print("Error de conexión a Redis:", e)
+        print("llego a none")
         return None  # Devolver None en caso de error de conexión
 
 # Función para eliminar todos los datos de la base de datos Redis
