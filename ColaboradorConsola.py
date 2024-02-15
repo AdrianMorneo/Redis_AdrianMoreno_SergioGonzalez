@@ -113,6 +113,7 @@ def borrar():
         if ut.confirmacion("Seguro que quieres ELIMINAR el Colaborador?",
                            f"Eliminacion del Colaborador: DNI: {colaborador['dni']}"):
             try:
+                eliminarPadrinoDeAnimales(colaborador["dni"])
                 con.delete("colaborador:" + colaborador["dni"])  # Eliminar el colaborador de la base de datos
                 return True  # Retornar verdadero si se eliminó correctamente el colaborador
             except Exception as errorEliminar:
@@ -199,6 +200,8 @@ def modificar():
                             if not comprobarDNIBBDD(dniNuevo):
                                 if ut.confirmacion("¿Seguro que quieres Modificarlo?","Modificación"):
                                     colaborador['dni'] = dniNuevo
+
+                                    modificarPadrinoDeAnimales(dni, dniNuevo)
                                     con.delete(f"colaborador:{dni}")
                                     # Convertir el diccionario modificado a formato JSON
                                     colaborador_json_modificado = json.dumps(colaborador)
@@ -351,4 +354,52 @@ def mostrarTodos():
 
     # Devolver la lista de información de colaboradores
     return colaboradores_info
+
+def eliminarPadrinoDeAnimales(dniP):
+    '''
+    Metodo para mostrar todos los animales que tiene un colaborador apadrinados
+    Muestra el nombre y el id del animal
+    :return:No devuelve nada
+    '''
+    valorA2= ""
+    nombres = ""
+    keys = con.keys('A*')#guarda todas la keys que comiencen por una A
+    hecho = False
+    encontrado = False
+    keyE = ""
+    if keys:
+        for key in keys:
+            valor = con.get(key)
+            valorA = valor.split("\n")#separo todos los valores del animal
+            if "DniPadrino: "+dniP in valor:#si el animal en su cadena de info tiene DniPadrino + el dni del padrino introducido
+                keyE = key
+                valorA[4] ="DniPadrino: "#guardo los el nombre e id de ese animal para mostrarlo posteriormete en una lista con todos los que tenga
+                hecho = True
+            if hecho:
+                valorA2 = "\n".join(valorA)
+            con.set(keyE, valorA2)
+
+def modificarPadrinoDeAnimales(dniP, dniNuevo):
+    '''
+    Metodo para mostrar todos los animales que tiene un colaborador apadrinados
+    Muestra el nombre y el id del animal
+    :return:No devuelve nada
+    '''
+    valorA2= ""
+    nombres = ""
+    keys = con.keys('A*')#guarda todas la keys que comiencen por una A
+    hecho = False
+    encontrado = False
+    keyE = ""
+    if keys:
+        for key in keys:
+            valor = con.get(key)
+            valorA = valor.split("\n")#separo todos los valores del animal
+            if "DniPadrino: "+dniP in valor:#si el animal en su cadena de info tiene DniPadrino + el dni del padrino introducido
+                keyE = key
+                valorA[4] =f"DniPadrino: {dniNuevo}"#guardo los el nombre e id de ese animal para mostrarlo posteriormete en una lista con todos los que tenga
+                hecho = True
+            if hecho:
+                valorA2 = "\n".join(valorA)
+            con.set(keyE, valorA2)
 

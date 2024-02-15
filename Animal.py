@@ -322,6 +322,8 @@ def desapadrinarAnimal():
                     print("Operacion Denegada")
             else:#si el animal no contiene un padrino
                 print("Este animal no tiene padrino")
+        else:
+            print('No se encontró el animal especificado')
     else:
         print("No hay animales registrados")
 
@@ -378,6 +380,8 @@ def mostrarAnimalesP():
             print("Todavia no hay animales registrados")
     else:
         print(existeP[1])#si no existe el padrino buscado imprimo el mensaje que me devuelve el metodo comprobarPadrino
+
+
 
 def comprobarVacioA():
     '''
