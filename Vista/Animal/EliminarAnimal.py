@@ -1,10 +1,8 @@
 from PySide2.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QLabel, QLineEdit, QPushButton, QWidget, QMessageBox
 from PySide2.QtCore import Qt
 
-import ColaboradorConsola  # Importar módulo para manejar la lógica de colaboradores en la consola
 import EstiloCSS as css  # Importar un módulo EstiloCSS para el estilo de la interfaz de usuario
-import ColaboradorGrafico as cg  # Importar módulo para manejar la lógica de colaboradores gráficos
-import AnimalGrafico as ag  # Importar módulo para manejar la lógica de colaboradores
+import AnimalGrafico as ag  # Importar módulo para manejar la lógica de Animal
 
 
 # Variable global para almacenar la ventana de eliminación de animal
@@ -22,7 +20,7 @@ def eliminarAnimal():
         if confirmacion == QMessageBox.Yes:
             # Si se confirma, eliminar al animal
             ag.eliminar(nombre)
-            QMessageBox.information(eliminarAnimalWindow, "Colaborador eliminado",
+            QMessageBox.information(eliminarAnimalWindow, "Animal eliminado",
                                     f"El animal {nombre} ha sido eliminado correctamente.",
                                     QMessageBox.Ok)
 

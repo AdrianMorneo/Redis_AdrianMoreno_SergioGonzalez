@@ -1,12 +1,11 @@
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QLabel, QLineEdit, QPushButton, QWidget, QMessageBox, QComboBox
 import EstiloCSS as css  # Importar un módulo EstiloCSS para el estilo de la interfaz de usuario
-import AnimalGrafico as ag  # Importar módulo para manejar la lógica de colaboradores
+import AnimalGrafico as ag  # Importar módulo para manejar la lógica de Animal
 import Utiles as ut  # Importar módulo con funciones útiles
-import ColaboradorConsola as cc  # Importar módulo para manejar la lógica de colaboradores en la consola
 import Animal as aml
 
-# Función para manejar el evento de agregar un colaborador
+# Función para manejar el evento de agregar un Animal
 def handleAgregar(tipo, nombre, edad):
     if not ut.validarTipoA(tipo):
         # Si el tipo no es válido, mostrar una alerta

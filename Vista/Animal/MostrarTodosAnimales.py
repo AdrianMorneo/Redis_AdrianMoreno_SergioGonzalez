@@ -2,7 +2,6 @@
 from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QLabel, QPushButton, QWidget, QTableWidget, QTableWidgetItem, \
     QHeaderView, QMessageBox
 import EstiloCSS as css
-import ColaboradorConsola as cc
 import Conexion as conect
 
 cnt = conect.conectar()

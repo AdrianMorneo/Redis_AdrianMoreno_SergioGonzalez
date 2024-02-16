@@ -6,11 +6,11 @@
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QPushButton, QWidget
 import EstiloCSS as css
-from . import AgregarAnimal as aa  # Importar módulo para agregar colaborador
-from . import MostrarTodosAnimales as mt  # Importar módulo para mostrar todos los colaboradores
-from . import ModificarAnimal as ma  # Importar módulo para modificar colaborador
-from . import BuscarAnimal as ba  # Importar módulo para buscar colaborador
-from . import EliminarAnimal as ea  # Importar módulo para eliminar colaborador
+from . import AgregarAnimal as aa  # Importar módulo para agregar Animal
+from . import MostrarTodosAnimales as mt  # Importar módulo para mostrar todos los Animal
+from . import ModificarAnimal as ma  # Importar módulo para modificar Animal
+from . import BuscarAnimal as ba  # Importar módulo para buscar Animal
+from . import EliminarAnimal as ea  # Importar módulo para eliminar Animal
 
 
 def handleAddAnimalClick():

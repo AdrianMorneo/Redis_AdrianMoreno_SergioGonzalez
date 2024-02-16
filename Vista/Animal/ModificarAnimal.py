@@ -2,11 +2,9 @@ from PySide2.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QLabel, QL
     QCalendarWidget, QMessageBox, QComboBox  # Importar clases necesarias desde PySide2
 from PySide2.QtCore import Qt, QDate  # Importar clases necesarias desde PySide2
 
-import ColaboradorConsola  # Importar módulo para interactuar con la base de datos de colaboradores (consola)
 import EstiloCSS as css  # Importar módulo para el estilo de la interfaz de usuario
-import AnimalGrafico as ag  # Importar módulo para interactuar con la base de datos de colaboradores (gráfico)
+import AnimalGrafico as ag  # Importar módulo para interactuar con la base de datos de Animal (gráfico)
 import Utiles as ut  # Importar módulo de utilidades para validaciones
-import ColaboradorConsola as cc  # Importar módulo para interactuar con la base de datos de colaboradores (consola)
 import Animal as aml
 import Conexion as conect
 
@@ -98,7 +96,7 @@ def buscarAnimal():
         nombre= valoresAnimal[2].split(": ")
         tipo=valoresAnimal[1].split(": ")
         edad=valoresAnimal[3].split(": ")
-        # Si se encuentra el colaborador, llenar los campos con sus datos
+        # Si se encuentra el Animal, llenar los campos con sus datos
         tipoComboBox.setCurrentText(tipo[1])
         nombreLineEdit.setText(nombre[1])
         edadLineEdit.setText(edad[1])
@@ -118,7 +116,7 @@ def modificarAnimalVentana():
 
         # Crear una nueva ventana principal para modificar animal
         modificarAnimalWindow = QMainWindow()
-        modificarAnimalWindow.setWindowTitle('Modificar Colaborador')
+        modificarAnimalWindow.setWindowTitle('Modificar Animal')
         modificarAnimalWindow.setGeometry(200, 200, 400, 400)
 
         # Establecer el estilo de la ventana utilizando el CSS proporcionado
