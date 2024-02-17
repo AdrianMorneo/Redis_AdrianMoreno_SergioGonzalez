@@ -14,13 +14,6 @@ def handleAgregar(tipo, nombre, edad):
         alerta.setWindowTitle("Alerta")
         alerta.setText("Tipo no válido")
         alerta.exec_()
-    elif not aml.comprobarAnimal(nombre):
-        #Si el nombre ya existe en la base de datos, mostrar una alerta
-        alerta = QMessageBox()
-        alerta.setIcon(QMessageBox.Warning)
-        alerta.setWindowTitle("Alerta")
-        alerta.setText("Nombre ya introducido en la BBDD")
-        alerta.exec_()
 
     # Validación del nombre
     elif not ut.validarNombre(nombre):
@@ -37,6 +30,13 @@ def handleAgregar(tipo, nombre, edad):
         alerta.setIcon(QMessageBox.Warning)
         alerta.setWindowTitle("Alerta")
         alerta.setText("Edad no válida, debe ser un número entre 0 y 100")
+        alerta.exec_()
+    elif aml.comprobarAnimal(nombre.upper()):
+        #Si el nombre ya existe en la base de datos, mostrar una alerta
+        alerta = QMessageBox()
+        alerta.setIcon(QMessageBox.Warning)
+        alerta.setWindowTitle("Alerta")
+        alerta.setText("Nombre ya introducido en la BBDD")
         alerta.exec_()
     else:
         # Si todos los datos son válidos, agregar el animal

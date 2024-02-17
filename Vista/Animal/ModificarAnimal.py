@@ -32,7 +32,7 @@ def confirmarModificacion(nombreAnt, tipo, nombre, edad):
         ############### comprobar si el nombre esta en la bbdd
         ###############
 
-    elif not aml.comprobarAnimal(nombre):
+    elif aml.comprobarAnimal(nombre):
         # Si el nombre ya existe en la base de datos, mostrar una alerta
         alerta = QMessageBox()
         alerta.setIcon(QMessageBox.Warning)
